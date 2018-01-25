@@ -21,16 +21,26 @@
   <ion-content class="vertical-align-content" text-center>
     <ion-grid>
       <ion-row>
-        <ion-col>
-            <button ion-button icon-left color="third" >
-                <ion-icon name="mail"></ion-icon>
-                Se connecter avec Mail
-              </button>
-        </ion-col>
+          <button ion-button color="third" block>
+              <ion-icon name="mail"></ion-icon>
+              <span>S'inscrire avec Mail</span>
+          </button>
       </ion-row>
-    </ion-grid> 
+        <ion-row>
+            <button ion-button icon-start color="danger" (click)="google()" block>
+                <ion-icon name="logo-google"></ion-icon>
+               S'inscrire  avec Google
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-button icon-start color="facebook" block>
+                <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
+                S'inscrire avec facebook
+            </button>
+        </ion-row>
+    </ion-grid>
 
-  </ion-content>    
-    
+  </ion-content>
+
 
 </ion-content>

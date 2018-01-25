@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {User} from "../../model/User";
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
 /**
  * Generated class for the RegisterPage page.
@@ -16,18 +16,28 @@ import {User} from "../../model/User";
 })
 export class RegisterPage {
 
-  @ViewChild("myForm") private form: any;
-  private registerError: boolean;
-
-  private user: User = new User();
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private authProvider: AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
 
+
+  mail() {
+  }
+
+
+  google() {
+    this.authProvider.loginWithGoogle().then(res => {
+    });
+  }
+
+
+  facebook() {
+
+  }
 
 
 }

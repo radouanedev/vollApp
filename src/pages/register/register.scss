@@ -1,8 +1,19 @@
 page-register {
-    .vertical-align-content > *
-    {
-         display: flex!important;
-         align-content: center!important;
-         align-items: center!important;
-    }
+  .vertical-align-content > *
+  {
+    display: flex!important;
+    align-content: center!important;
+    align-items: center!important;
+  };
+
+  span {
+    text-transform: capitalize;
+    margin-left: 4%;
+  }
+
+  .icon {
+    position: absolute;
+    left: 5%;
+  }
+
 }
