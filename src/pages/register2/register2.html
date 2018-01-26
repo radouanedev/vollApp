@@ -1,0 +1,157 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Inscription</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <form novalidate
+        (ngSubmit)="login()"
+        #myform="ngForm">
+
+    <ion-item>
+
+      <ion-label floating> Email
+      </ion-label>
+
+      <ion-input type="text"
+                 name="email"
+                 [(ngModel)]="user.email"
+                 required
+                 pattern="[^ @]*@[^ @]*"
+                 #email="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="email"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> Nom
+      </ion-label>
+
+      <ion-input type="text"
+                 name="nom"
+                 [(ngModel)]="user.nom"
+                 required
+                 minlength="3"
+                 #nom="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="nom"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> prenom
+      </ion-label>
+
+      <ion-input type="text"
+                 name="prenom"
+                 [(ngModel)]="user.prenom"
+                 required
+                 minlength="3"
+                 #prenom="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="prenom"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> Date de naissance
+      </ion-label>
+
+      <ion-datetime displayFormat="MMM DD YYYY"
+                    name="dateNaiss"
+                    [(ngModel)]="user.dateNaiss"
+                    required
+                    #dateNaiss="ngModel" ></ion-datetime>
+
+    </ion-item>
+
+    <show-errors [control]="cin"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> CIN
+      </ion-label>
+
+      <ion-input type="cin"
+                 [(ngModel)]="user.cin"
+                 name="cin"
+                 required
+                 minlength="4"
+                 #cin="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="cin"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> Telephone
+      </ion-label>
+
+      <ion-input type="tel"
+                 [(ngModel)]="user.tel"
+                 name="tel"
+                 required
+                 minlength="3"
+                 #tel="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="tel"></show-errors>
+
+
+    <ion-item>
+
+      <ion-label floating> Nationnalite
+      </ion-label>
+
+      <ion-input type="nationnalite"
+                 [(ngModel)]="user.nationnalite"
+                 name="nationnalite"
+                 required
+                 minlength="3"
+                 #nationnalite="ngModel" > </ion-input>
+
+    </ion-item>
+
+    <show-errors [control]="nationnalite"></show-errors>
+
+
+    <div class="buttonsGroup">
+
+      <button ion-button color="primary" type="submit"
+              [disabled]="myform.invalid" block>S'inscrire</button>
+
+      <h5 class="text-md-danger"
+          text-center
+          *ngIf="connectError"> Information Incorrect </h5>
+
+
+    </div>
+
+
+  </form>
+
+
+</ion-content>

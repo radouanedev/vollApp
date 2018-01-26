@@ -22,21 +22,25 @@
     <ion-grid>
       <ion-row>
           <button ion-button color="third" block>
-              <ion-icon name="mail"></ion-icon>
               <span>S'inscrire avec Mail</span>
+              <ion-icon name="mail" class="insideIcon"></ion-icon>
           </button>
       </ion-row>
         <ion-row>
             <button ion-button icon-start color="danger" (click)="google()" block>
-                <ion-icon name="logo-google"></ion-icon>
+                <ion-icon name="logo-google" class="insideIcon"></ion-icon>
                S'inscrire  avec Google
             </button>
         </ion-row>
         <ion-row>
             <button ion-button icon-start color="facebook" block>
-                <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
+                <ion-icon ios="logo-facebook" md="logo-facebook" class="insideIcon"></ion-icon>
                 S'inscrire avec facebook
             </button>
+        </ion-row>
+
+        <ion-row *ngIf="userProfile">
+            <h3>hhhhhh : {{userProfile.displayName}}, {{userProfile.email}}</h3>
         </ion-row>
     </ion-grid>
 

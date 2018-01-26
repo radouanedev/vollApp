@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RegisterPage } from './register';
-import {AngularFireAuthModule} from "angularfire2/auth";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
 @NgModule({
   declarations: [
@@ -10,10 +8,7 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
   ],
   imports: [
       IonicPageModule.forChild(RegisterPage),
-      AngularFireAuthModule
   ],
-    providers: [
-        AuthServiceProvider
-    ]
+    providers: []
 })
 export class RegisterPageModule {}

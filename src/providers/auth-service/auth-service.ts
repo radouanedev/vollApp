@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {User} from "../../model/User";
 import {AngularFireAuth} from "angularfire2/auth";
-import * as firebase from 'firebase/app';
+import { GooglePlus } from '@ionic-native/google-plus';
 
+const clientId = '757926605458-fecoo0e322vfmdcicld1qlbim8qbhvmu.apps.googleusercontent.com';
 
 @Injectable()
 export class AuthServiceProvider {
 
-
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth,
+               private googlePlus: GooglePlus) {
     console.log('Hello AuthServiceProvider Provider');
   }
 
@@ -21,6 +22,6 @@ export class AuthServiceProvider {
   }
 
   loginWithGoogle() {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return this.googlePlus.login({ 'webClientId': clientId,'offline': true});
   }
 }

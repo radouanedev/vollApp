@@ -1,6 +1,8 @@
 import {Component, } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {Register2Page} from "../register2/register2";
+import {User} from "../../model/User";
 
 /**
  * Generated class for the RegisterPage page.
@@ -16,12 +18,13 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 })
 export class RegisterPage {
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private authProvider: AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+    //console.log('ionViewDidLoad RegisterPage');
   }
 
 
@@ -30,7 +33,15 @@ export class RegisterPage {
 
 
   google() {
-    this.authProvider.loginWithGoogle().then(res => {
+
+    this.authProvider.loginWithGoogle().then((res)=> {
+      let user = new User();
+      user.nom = res.familyName;
+      user.prenom = res.givenName;
+      user.email = res.email;
+      this.navCtrl.push(Register2Page, {user: user});
+    }, (err)=> {
+      alert(err);
     });
   }
 

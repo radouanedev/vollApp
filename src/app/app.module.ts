@@ -8,34 +8,52 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LoginPage } from "../pages/login/login";
 import { LoginPageModule } from "../pages/login/login.module";
 import {firebaseConfig} from "../config/environment";
 import {AngularFireModule} from "angularfire2";
-import {RegisterPageModule} from "../pages/register/register.module";
+import {RegisterPage} from "../pages/register/register";
+import {Register2Page} from "../pages/register2/register2";
+import {ShowErrors} from "../utils/ShowErrors";
+
+import {AuthServiceProvider} from "../providers/auth-service/auth-service";
+
+import {AngularFireAuthModule} from "angularfire2/auth";
+
+import { GooglePlus } from '@ionic-native/google-plus';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    ShowErrors,
+    RegisterPage,
+    Register2Page,
+    LoginPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    LoginPageModule,
-    RegisterPageModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    ShowErrors,
+    RegisterPage,
+    Register2Page,
+    LoginPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AuthServiceProvider,
+    GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

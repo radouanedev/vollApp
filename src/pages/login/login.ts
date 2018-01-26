@@ -21,7 +21,7 @@ export class LoginPage {
   private user: User = new User();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private authProvider: AuthServiceProvider, public loadingCtrl: LoadingController) {
+              private authProvider: AuthServiceProvider, private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -54,7 +54,8 @@ export class LoginPage {
   }
 
   gotoRegisterPag() {
-    this.navCtrl.setRoot(RegisterPage);
+    this.navCtrl.push(RegisterPage, {param1: 'info sended'});
+    //this.navCtrl.setRoot(RegisterPage);
   }
 
 }
