@@ -35,7 +35,8 @@ export class ShowErrors {
 
   listOfErrors(): string[] {
     return Object.keys(this.control.errors)
-      .map(field => this.getMessage(field, this.control.errors[field]));
+      .map(field =>
+          this.getMessage(field, this.control.errors[field]));
   }
 
   private getMessage(type: string, params: any) {

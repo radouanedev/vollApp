@@ -9,7 +9,6 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from "../pages/login/login";
-import { LoginPageModule } from "../pages/login/login.module";
 import {firebaseConfig} from "../config/environment";
 import {AngularFireModule} from "angularfire2";
 import {RegisterPage} from "../pages/register/register";
@@ -21,6 +20,12 @@ import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {AngularFireAuthModule} from "angularfire2/auth";
 
 import { GooglePlus } from '@ionic-native/google-plus';
+import { CountriesProvider } from '../providers/countries/countries';
+import { HttpClientModule } from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {Errors} from "../utils/Errors";
+import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/database";
+import { DatabaseProvider } from '../providers/database/database';
 
 
 @NgModule({
@@ -32,12 +37,16 @@ import { GooglePlus } from '@ionic-native/google-plus';
     RegisterPage,
     Register2Page,
     LoginPage,
+      Errors
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+      HttpClientModule,
+      IonicModule.forRoot(MyApp),
+      ReactiveFormsModule,
+      AngularFireModule.initializeApp(firebaseConfig),
+      AngularFireAuthModule,
+      AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,11 +59,14 @@ import { GooglePlus } from '@ionic-native/google-plus';
     LoginPage,
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    AuthServiceProvider,
-    GooglePlus,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+      StatusBar,
+      SplashScreen,
+      AuthServiceProvider,
+      GooglePlus,
+      {provide: ErrorHandler, useClass: IonicErrorHandler},
+      CountriesProvider,
+      AngularFireDatabase,
+    DatabaseProvider
   ]
 })
 export class AppModule {}

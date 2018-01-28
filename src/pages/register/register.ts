@@ -29,16 +29,17 @@ export class RegisterPage {
 
 
   mail() {
+      this.navCtrl.push(Register2Page);
   }
 
 
   google() {
-
     this.authProvider.loginWithGoogle().then((res)=> {
       let user = new User();
       user.nom = res.familyName;
       user.prenom = res.givenName;
       user.email = res.email;
+      this.authProvider.logout();
       this.navCtrl.push(Register2Page, {user: user});
     }, (err)=> {
       alert(err);

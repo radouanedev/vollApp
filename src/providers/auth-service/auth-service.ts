@@ -22,6 +22,14 @@ export class AuthServiceProvider {
   }
 
   loginWithGoogle() {
-    return this.googlePlus.login({ 'webClientId': clientId,'offline': true});
+    return this.googlePlus.login({ 'webClientId': clientId,'offline': false});
+  }
+
+  logout(){
+      return this.afAuth.auth.signOut();
+  }
+
+  checkConnection() {
+      return this.afAuth.authState;
   }
 }

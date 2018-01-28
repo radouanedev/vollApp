@@ -8,6 +8,7 @@ export class User {
   constructor() {
   }
 
+
   get email(): string {
     return this._email;
   }

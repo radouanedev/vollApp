@@ -17,139 +17,204 @@
 <ion-content padding>
 
   <form novalidate
-        (ngSubmit)="login()"
-        #myform="ngForm">
+        (ngSubmit)="register()"
+        [formGroup]="myform">
 
-    <ion-item>
+    <ion-grid>
 
-      <ion-label floating> Email
-      </ion-label>
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
-      <ion-input type="text"
-                 name="email"
-                 [(ngModel)]="user.email"
-                 required
-                 pattern="[^ @]*@[^ @]*"
-                 #email="ngModel" > </ion-input>
+                    <ion-label floating> Email *
+                    </ion-label>
 
-    </ion-item>
+                    <ion-input type="text"
+                               name="email"
+                               [(ngModel)]="user.email"
+                               formControlName="email" > </ion-input>
 
-    <show-errors [control]="email"></show-errors>
+                </ion-item>
 
+                <s-errors [control]="myform.controls.email" [messages]="myform.emailMessages"></s-errors>
 
-    <ion-item>
+            </ion-col>
+        </ion-row>
 
-      <ion-label floating> Nom
-      </ion-label>
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
-      <ion-input type="text"
-                 name="nom"
-                 [(ngModel)]="user.nom"
-                 required
-                 minlength="3"
-                 #nom="ngModel" > </ion-input>
+                    <ion-label floating> Nom *
+                    </ion-label>
 
-    </ion-item>
+                    <ion-input type="text"
+                               name="nom"
+                               [(ngModel)]="user.nom"
+                               formControlName="nom"> </ion-input>
 
-    <show-errors [control]="nom"></show-errors>
+                </ion-item>
 
+                <s-errors [control]="myform.controls.nom" [messages]="myform.nomMessages"></s-errors>
+            </ion-col>
 
-    <ion-item>
+        </ion-row>
 
-      <ion-label floating> prenom
-      </ion-label>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating> prenom *
+                    </ion-label>
 
-      <ion-input type="text"
-                 name="prenom"
-                 [(ngModel)]="user.prenom"
-                 required
-                 minlength="3"
-                 #prenom="ngModel" > </ion-input>
+                    <ion-input type="text"
+                               name="prenom"
+                               [(ngModel)]="user.prenom"
+                               formControlName="prenom"> </ion-input>
 
-    </ion-item>
+                </ion-item>
 
-    <show-errors [control]="prenom"></show-errors>
+                <s-errors [control]="myform.controls.prenom" [messages]="myform.prenomMessages"></s-errors>
+            </ion-col>
+        </ion-row>
 
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
-    <ion-item>
+                    <ion-label floating> Date de naissance *
+                    </ion-label>
 
-      <ion-label floating> Date de naissance
-      </ion-label>
+                    <ion-datetime displayFormat="MMM DD YYYY"
+                                  name="dateNaiss"
+                                  [(ngModel)]="user.dateNaiss"
+                                  formControlName="dateNaiss"></ion-datetime>
 
-      <ion-datetime displayFormat="MMM DD YYYY"
-                    name="dateNaiss"
-                    [(ngModel)]="user.dateNaiss"
-                    required
-                    #dateNaiss="ngModel" ></ion-datetime>
+                </ion-item>
 
-    </ion-item>
+                <s-errors [control]="myform.controls.dateNaiss" [messages]="myform.dateNaissMessages"></s-errors>
+            </ion-col>
+        </ion-row>
 
-    <show-errors [control]="cin"></show-errors>
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
+                    <ion-label floating> CIN *
+                    </ion-label>
 
-    <ion-item>
+                    <ion-input type="text"
+                               [(ngModel)]="user.cin"
+                               name="cin"
+                               formControlName="cin"> </ion-input>
 
-      <ion-label floating> CIN
-      </ion-label>
+                </ion-item>
 
-      <ion-input type="cin"
-                 [(ngModel)]="user.cin"
-                 name="cin"
-                 required
-                 minlength="4"
-                 #cin="ngModel" > </ion-input>
+                <s-errors [control]="myform.controls.cin" [messages]="myform.cinMessages"></s-errors>
+            </ion-col>
+        </ion-row>
 
-    </ion-item>
+        <ion-row>
+            <ion-col col-5>
+                <ion-item>
 
-    <show-errors [control]="cin"></show-errors>
+                    <ion-label floating> code *
+                    </ion-label>
 
+                    <ion-select submitText="Ok" cancelText="Annuler" name="code" formControlName="code">
+                        <ion-option *ngFor="let country of countries" value="{{country.numericCode}}">
+                            {{country.numericCode}}&nbsp; {{country.translations.fr}}
+                        </ion-option>
+                    </ion-select>
 
-    <ion-item>
+                </ion-item>
 
-      <ion-label floating> Telephone
-      </ion-label>
+                <s-errors [control]="myform.controls.code" [messages]="myform.codeMessages"></s-errors>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating>telephone *</ion-label>
+                    <ion-input type="number"
+                               [(ngModel)]="user.tel"
+                               name="tel"
+                               formControlName="tel"> </ion-input>
 
-      <ion-input type="tel"
-                 [(ngModel)]="user.tel"
-                 name="tel"
-                 required
-                 minlength="3"
-                 #tel="ngModel" > </ion-input>
+                </ion-item>
 
-    </ion-item>
+                <s-errors [control]="myform.controls.tel" [messages]="myform.telMessages"></s-errors>
+            </ion-col>
+        </ion-row>
 
-    <show-errors [control]="tel"></show-errors>
+        <<ion-row>
+            <ion-col>
+                <ion-item>
 
+                <ion-label floating> Mot de passe *
+                </ion-label>
 
-    <ion-item>
+                <ion-input type="password"
+                           [(ngModel)]="user.password"
+                           name="password"
+                           formControlName="password"> </ion-input>
 
-      <ion-label floating> Nationnalite
-      </ion-label>
+                </ion-item>
 
-      <ion-input type="nationnalite"
-                 [(ngModel)]="user.nationnalite"
-                 name="nationnalite"
-                 required
-                 minlength="3"
-                 #nationnalite="ngModel" > </ion-input>
+                <s-errors [control]="myform.controls.password" [messages]="myform.passwordMessages"></s-errors>
+            </ion-col>
+        </ion-row>
 
-    </ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
-    <show-errors [control]="nationnalite"></show-errors>
+                    <ion-label floating> Confirmation du  mot de passe *
+                    </ion-label>
 
+                    <ion-input type="password"
+                               name="passwordConf"
+                               formControlName="passwordConf"> </ion-input>
 
-    <div class="buttonsGroup">
+                </ion-item>
 
-      <button ion-button color="primary" type="submit"
-              [disabled]="myform.invalid" block>S'inscrire</button>
+                <s-errors [control]="myform.controls.passwordConf" [messages]="myform.passwordConfMessages"></s-errors>
+                <span padding-left class="errorText"
+                      *ngIf="(myform.controls.passwordConf.value != user.password) &&
+                              myform.controls.passwordConf.value.trim().length> 0 &&
+                              (myform.controls.passwordConf.dirty || myform.controls.passwordConf.touched)" >
+                    Confirmation de mot de passe est non egal
+                </span>
+            </ion-col>
+        </ion-row>
 
-      <h5 class="text-md-danger"
-          text-center
-          *ngIf="connectError"> Information Incorrect </h5>
+        <ion-row>
+            <ion-col>
+                <ion-item>
 
+                    <ion-label floating> Nationnalite *
+                    </ion-label>
 
-    </div>
+                    <ion-select submitText="Ok" cancelText="Annuler"
+                                name="nationnalite"
+                                [(ngModel)]="user.nationnalite"
+                                formControlName="nationnalite">
 
+                        <ion-option *ngFor="let country of countries" value="{{country.name}}">
+                             {{country.translations.fr}}
+                        </ion-option>
+                    </ion-select>
+
+                </ion-item>
+
+                <s-errors [control]="myform.controls.nationnalite" [messages]="myform.nationnaliteMessages"></s-errors>
+            </ion-col>
+        </ion-row>
+
+        <ion-row padding-top>
+            <ion-col>
+                <button ion-button color="primary" type="submit"
+                        [disabled]="myform.invalid" block>S'inscrire</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
   </form>
 

@@ -75,11 +75,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "757926605458-rgb6792ubvemgfbsva09m758o2n7mirv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.radouane.app",
+            "certificate_hash": "25c2256edd4c8751e331efd7266884177b6ea649"
+          }
+        },
+        {
           "client_id": "757926605458-fecoo0e322vfmdcicld1qlbim8qbhvmu.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "757926605458-fo03b02vfq47nbf5s8dqdj9uqje18srj.apps.googleusercontent.com",
+          "client_id": "757926605458-igsfed0mkcpl27937vlo2in877lvk6nr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "app.radouane.app",
