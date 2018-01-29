@@ -5,7 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import {LoginPage} from "../pages/login/login";
+import {AuthServiceProvider} from "../providers/auth-service/auth-service";
+import {DatabaseProvider} from "../providers/database/database";
+import {ListVolesPage} from "../pages/list-voles/list-voles";
+import {ListAvionsPage} from "../pages/list-avions/list-avions";
+import {ReserverPage} from "../pages/reserver/reserver";
 
 @Component({
   templateUrl: 'app.html'
@@ -13,17 +17,20 @@ import {LoginPage} from "../pages/login/login";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = ListAvionsPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+              private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider) {
     this.initializeApp();
+
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: "Voles du jour", component: HomePage, icon: "timer" },
+      { title: 'Chercher vole', component: ListPage, icon: "search" },
+        { title: 'Nos avions', component: ListAvionsPage, icon: "plane" }
     ];
 
   }
@@ -35,11 +42,34 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+
+    this.authProvider.checkAuthState().onAuthStateChanged((user: any) => {
+       if(user) {
+           let userId = user.uid;
+
+           this.dbProvider.getUser(userId).subscribe((user2: any) => {
+               if(user) {
+                   const roles = user2._roles;
+                   if(roles.admin) {
+                       this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
+                       this.pages.push({ title: 'list avions', component: ListAvionsPage, icon: "create" });
+                   } else if(roles.user) {
+                       this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
+                   }
+               }
+
+           }, (err)=> {
+           });
+       }
+    });
+
   }
+
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, page.icon);
   }
 }

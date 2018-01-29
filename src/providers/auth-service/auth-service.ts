@@ -32,4 +32,9 @@ export class AuthServiceProvider {
   checkConnection() {
       return this.afAuth.authState;
   }
+
+  checkAuthState() {
+      return this.afAuth.auth;
+  }
+
 }

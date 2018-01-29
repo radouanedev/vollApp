@@ -3,7 +3,8 @@ export class User {
   private _email: string=''; private _password: string='';
   private _nom: string=''; private _prenom: string='';
   private _dateNaiss: Date = new Date(); private _cin: string;
-  private _tel: string = ''; private _nationnalite: string = ''
+  private _tel: string = ''; private _nationnalite: string = '';
+  private _roles: any = {user: true};
 
   constructor() {
   }
@@ -73,5 +74,12 @@ export class User {
     this._nationnalite = value;
   }
 
+    get roles(): any {
+        return this._roles;
+    }
+
+    set roles(value: any) {
+        this._roles = value;
+    }
 
 }

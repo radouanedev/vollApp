@@ -26,6 +26,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {Errors} from "../utils/Errors";
 import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/database";
 import { DatabaseProvider } from '../providers/database/database';
+import {ListAvionsPage} from "../pages/list-avions/list-avions";
+import {AddAvionModal} from "../modals/addAvionModal/addAvionModal";
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { DatabaseProvider } from '../providers/database/database';
     RegisterPage,
     Register2Page,
     LoginPage,
-      Errors
+      Errors,
+      ListAvionsPage,
+      AddAvionModal
   ],
   imports: [
     BrowserModule,
@@ -57,6 +61,8 @@ import { DatabaseProvider } from '../providers/database/database';
     RegisterPage,
     Register2Page,
     LoginPage,
+      ListAvionsPage,
+      AddAvionModal
   ],
   providers: [
       StatusBar,

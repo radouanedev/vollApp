@@ -38,9 +38,11 @@ export class Register2Page implements OnInit{
       }
   }
 
+
   ngOnInit() {
       this.myform = new RegisterForm();
   }
+
 
   ionViewDidLoad() {
 
@@ -52,6 +54,7 @@ export class Register2Page implements OnInit{
 
       console.log('ionViewDidLoad Register2Page');
   }
+
 
   register() {
       if(this.myform.valid) {
@@ -85,7 +88,7 @@ export class Register2Page implements OnInit{
 
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Inscritption!',
+            title: 'Sccuée!',
             subTitle: 'Inscription avec succée vous pouvez vous connectez maintenant!',
             buttons: ['OK']
         });
@@ -95,7 +98,7 @@ export class Register2Page implements OnInit{
 
     showErrorAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Inscritption!',
+            title: 'Failed!',
             subTitle: 'Inscription erroné (Utilisateur existe déja)',
             buttons: ['OK']
         });

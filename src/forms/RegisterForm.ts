@@ -1,5 +1,6 @@
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
+
 export class RegisterForm extends FormGroup{
 
     private static config;
@@ -75,7 +76,5 @@ export class RegisterForm extends FormGroup{
         super(RegisterForm.buildForm());
     }
 
-
-
-
 }
+

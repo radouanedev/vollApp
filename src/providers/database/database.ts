@@ -18,7 +18,17 @@ export class DatabaseProvider {
 
   addUser(userId: string, user: User) {
       user.password = null;
+      user.email = null;
       const listRef = this.db.list("users");
       return listRef.set(userId, user);
   }
+
+  getUser(userId) {
+     return this.db.object('users/'+userId).valueChanges();
+  }
+
+  getUsers() {
+
+  }
 }
+
