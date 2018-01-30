@@ -28,6 +28,7 @@ import {AngularFireDatabase, AngularFireDatabaseModule} from "angularfire2/datab
 import { DatabaseProvider } from '../providers/database/database';
 import {ListAvionsPage} from "../pages/list-avions/list-avions";
 import {AddAvionModal} from "../modals/addAvionModal/addAvionModal";
+import {ImagePicker} from "@ionic-native/image-picker";
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import {AddAvionModal} from "../modals/addAvionModal/addAvionModal";
       {provide: ErrorHandler, useClass: IonicErrorHandler},
       CountriesProvider,
       AngularFireDatabase,
-    DatabaseProvider
+    DatabaseProvider,
+      ImagePicker
   ]
 })
 export class AppModule {}

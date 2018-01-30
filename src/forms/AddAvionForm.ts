@@ -21,18 +21,12 @@ export class AddAvionForm extends FormGroup{
     }
 
 
-    urlImgMessages = {
-
-    }
-
-
     static buildForm(): any {
 
         AddAvionForm.config= {
             nom: new FormControl('', [Validators.required, Validators.minLength(3)]),
             nbrePlcMax: new FormControl('', [Validators.required]),
             description: new FormControl('', [Validators.minLength(20)]),
-            //urlImg: new FormControl('', [Validators.required])
         }
 
         return AddAvionForm.config;

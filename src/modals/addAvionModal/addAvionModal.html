@@ -67,10 +67,22 @@
                 </ion-col>
             </ion-row>
 
+            <ion-row padding-top text-center>
+                <ion-col>
+                    <button ion-button small icon-left color="light" (click)="upload()" >
+                        <ion-icon ios="ios-folder-open"  md="md-folder-open"></ion-icon>
+                        Choisir image d'avion
+                    </button>
+
+                    <span class="text-md-danger" class="errorText" *ngIf="imageError">{{imageError}}</span>
+                </ion-col>
+            </ion-row>
+
+
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid" block>Ajouter</button>
+                            [disabled]="myform.invalid && !imageError" block>Ajouter</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
