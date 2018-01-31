@@ -5,6 +5,7 @@ import {Avion} from "../../model/Avion";
 import {AddAvionForm} from "../../forms/AddAvionForm";
 import {ImagePicker} from "@ionic-native/image-picker";
 import * as firebase from 'firebase';
+import {firebaseConfig} from "../../config/environment";
 
 @Component({
     templateUrl: 'addAvionModal.html',
@@ -22,7 +23,9 @@ export class AddAvionModal implements OnInit {
 
     constructor(
         public params: NavParams,private toastCtrl: ToastController,
-        public viewCtrl: ViewController, private imagePicker: ImagePicker ) { }
+        public viewCtrl: ViewController, private imagePicker: ImagePicker ) {
+        firebase.initializeApp(firebaseConfig);
+    }
 
 
     ngOnInit() {
@@ -32,6 +35,18 @@ export class AddAvionModal implements OnInit {
 
     addAvion() {
 
+        if(!this.imageUrl)
+            return;
+
+        let image = this.dataURItoBlob('data:image/jpeg;base64,' + this.imageUrl);
+
+        let uploadTask = firebase.storage().ref().child('image/uploaded.png').put(image);
+
+        uploadTask.then(res=> {
+            this.showToast("image uploaded");
+        }, err => {
+            this.showToast("image no uploaded");
+        });
     }
 
 
@@ -74,5 +89,15 @@ export class AddAvionModal implements OnInit {
 
         toast.present(toast);
     }
+
+
+    dataURItoBlob(dataURI) {
+        let binary = atob(dataURI.split(',')[1]);
+        let array = [];
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+    };
 
 }
