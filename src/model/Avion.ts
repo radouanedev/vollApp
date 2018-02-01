@@ -1,7 +1,7 @@
 export class Avion {
 
     private _nom: string= ''; private _description: string= '';
-    private _nbrePlcMax: number; private _urlImg: string;
+    private _nbrePlcMax: number; private _imageURL: string;
 
     constructor() {}
 
@@ -30,11 +30,12 @@ export class Avion {
         this._nbrePlcMax = value;
     }
 
-    get urlImg(): string {
-        return this._urlImg;
+    get imageURL(): string {
+        return this._imageURL;
+
     }
 
-    set urlImg(value: string) {
-        this._urlImg = value;
+    set imageURL(value: string) {
+        this._imageURL = value;
     }
 }

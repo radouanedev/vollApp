@@ -29,6 +29,10 @@ import { DatabaseProvider } from '../providers/database/database';
 import {ListAvionsPage} from "../pages/list-avions/list-avions";
 import {AddAvionModal} from "../modals/addAvionModal/addAvionModal";
 import {ImagePicker} from "@ionic-native/image-picker";
+import {FileChooser} from "@ionic-native/file-chooser";
+import {FilePath} from "@ionic-native/file-path";
+import {File} from "@ionic-native/file";
+import {AngularFireStorageModule} from "angularfire2/storage";
 
 
 @NgModule({
@@ -51,7 +55,8 @@ import {ImagePicker} from "@ionic-native/image-picker";
       ReactiveFormsModule,
       AngularFireModule.initializeApp(firebaseConfig),
       AngularFireAuthModule,
-      AngularFireDatabaseModule
+      AngularFireDatabaseModule,
+      AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,7 +79,10 @@ import {ImagePicker} from "@ionic-native/image-picker";
       CountriesProvider,
       AngularFireDatabase,
     DatabaseProvider,
-      ImagePicker
+      ImagePicker,
+      FileChooser,
+      FilePath,
+      File
   ]
 })
 export class AppModule {}

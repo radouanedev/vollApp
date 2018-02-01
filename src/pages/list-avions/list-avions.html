@@ -16,62 +16,20 @@
 
 <ion-content padding>
 
-    <ion-card>
+    <ion-card *ngFor="let item of avions">
 
-        <img src="assets/imgs/logo.png">
+        <img src="{{item.imageURL}}">
 
         <ion-item>
-            <h2>Museum of Football</h2>
-            <p>11 N. Way St, Madison, WI 53703</p>
+            <h2>{{item._nom}}</h2>
+            <p>{{item._description}}</p>
+            <p>{{item._nbrePlcMax}} max de places</p>
         </ion-item>
 
     </ion-card>
 
-    <ion-card>
 
-        <img src="assets/imgs/logo.png">
-
-        <ion-item>
-            <h2>Museum of Football</h2>
-            <p>11 N. Way St, Madison, WI 53703</p>
-        </ion-item>
-
-    </ion-card>
-
-    <ion-card>
-
-        <img src="assets/imgs/logo.png">
-
-        <ion-item>
-            <h2>Museum of Football</h2>
-            <p>11 N. Way St, Madison, WI 53703</p>
-        </ion-item>
-
-    </ion-card>
-
-    <ion-card>
-
-        <img src="assets/imgs/logo.png">
-
-        <ion-item>
-            <h2>Museum of Football</h2>
-            <p>11 N. Way St, Madison, WI 53703</p>
-        </ion-item>
-
-    </ion-card>
-
-    <ion-card>
-
-        <img src="assets/imgs/logo.png">
-
-        <ion-item>
-            <h2>Museum of Football</h2>
-            <p>11 N. Way St, Madison, WI 53703</p>
-        </ion-item>
-
-    </ion-card>
-
-    <ion-fab right bottom>
+    <ion-fab right bottom *ngIf="isAdmin">
         <button ion-fab color="danger" (click)="goToAddAvion()"><ion-icon name="add" ></ion-icon></button>
     </ion-fab>
 

@@ -11,13 +11,15 @@ import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {ListAvionsPage} from "../pages/list-avions/list-avions";
 import {ReserverPage} from "../pages/reserver/reserver";
 
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ListAvionsPage;
+  rootPage: any = HomePage;
+  public static isAdmin = false;
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -53,7 +55,7 @@ export class MyApp {
                    const roles = user2._roles;
                    if(roles.admin) {
                        this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
-                       this.pages.push({ title: 'list avions', component: ListAvionsPage, icon: "create" });
+                       MyApp.isAdmin = true;
                    } else if(roles.user) {
                        this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
                    }

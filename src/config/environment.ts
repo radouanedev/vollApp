@@ -6,3 +6,4 @@ export const firebaseConfig = {
   storageBucket: "volapp-91a3a.appspot.com",
   messagingSenderId: "889502691124"
 }
+

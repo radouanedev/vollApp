@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {User} from "../../model/User";
+import {Avion} from "../../model/Avion";
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -19,16 +20,25 @@ export class DatabaseProvider {
   addUser(userId: string, user: User) {
       user.password = null;
       user.email = null;
-      const listRef = this.db.list("users");
-      return listRef.set(userId, user);
+      const usersRef = this.db.list("users");
+      return usersRef.set(userId, user);
   }
+
 
   getUser(userId) {
      return this.db.object('users/'+userId).valueChanges();
   }
 
-  getUsers() {
 
+  addAvion(avion: Avion) {
+      const avionsRef = this.db.list("avions");
+      return avionsRef.push(avion);
   }
+
+
+  getAvions() {
+      return this.db.list("avions").valueChanges();
+  }
+
 }
 

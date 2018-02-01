@@ -14,7 +14,7 @@
 <ion-content padding>
 
     <form novalidate
-          (ngSubmit)="addAvion()"
+          (ngSubmit)="addAction()"
           [formGroup]="myform">
 
         <ion-grid>
@@ -69,7 +69,7 @@
 
             <ion-row padding-top text-center>
                 <ion-col>
-                    <button ion-button small icon-left color="light" (click)="upload()" >
+                    <button ion-button small icon-left color="light" (click)="choose()" >
                         <ion-icon ios="ios-folder-open"  md="md-folder-open"></ion-icon>
                         Choisir image d'avion
                     </button>
@@ -82,7 +82,7 @@
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid && !imageError" block>Ajouter</button>
+                            [disabled]="myform.invalid || !imageURL" block>Ajouter</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
