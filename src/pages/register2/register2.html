@@ -121,8 +121,9 @@
                     </ion-label>
 
                     <ion-select submitText="Ok" cancelText="Annuler" name="code" formControlName="code">
+                        <ion-option></ion-option>
                         <ion-option *ngFor="let country of countries" value="{{country.numericCode}}">
-                            {{country.numericCode}}&nbsp; {{country.translations.fr}}
+                             + {{country.numericCode}}&nbsp; {{country.translations.fr}}
                         </ion-option>
                     </ion-select>
 

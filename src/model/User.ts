@@ -2,7 +2,7 @@ export class User {
 
   private _email: string=''; private _password: string='';
   private _nom: string=''; private _prenom: string='';
-  private _dateNaiss: Date = new Date(); private _cin: string;
+  private _dateNaiss: string = ''; private _cin: string;
   private _tel: string = ''; private _nationnalite: string = '';
   private _roles: any = {user: true};
 
@@ -42,11 +42,11 @@ export class User {
     this._prenom = value;
   }
 
-  get dateNaiss(): Date {
+  get dateNaiss(): string {
     return this._dateNaiss;
   }
 
-  set dateNaiss(value: Date) {
+  set dateNaiss(value: string) {
     this._dateNaiss = value;
   }
 

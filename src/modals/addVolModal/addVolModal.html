@@ -1,0 +1,190 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Ajouter un Vole
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary" showWhen="ios">Annuler</span>
+                <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content padding>
+
+    <form novalidate
+          (ngSubmit)="addAction()"
+          [formGroup]="myform">
+
+        <ion-grid>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Pays de depart *</ion-label>
+
+                        <ion-select submitText="Ok" cancelText="Annuler"
+                                    name="countryDepart" [(ngModel)]="vol.countryDepart"
+                                    formControlName="countryDepart" >
+                            <ion-option *ngFor="let country of countries" value="{{country.name}}">
+                                {{country.translations.fr}}
+                            </ion-option>
+                        </ion-select>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.countryDepart" [messages]="myform.countryDepartMessages"></s-errors>
+
+                </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Pays d'arrivée *</ion-label>
+
+                        <ion-select submitText="Ok" cancelText="Annuler"
+                                    name="countryArrive" [(ngModel)]="vol.countryArrive"
+                                    formControlName="countryArrive" >
+                            <ion-option *ngFor="let country of countries" value="{{country.name}}">
+                                {{country.translations.fr}}
+                            </ion-option>
+                        </ion-select>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.countryArrive" [messages]="myform.countryArriveMessages"></s-errors>
+
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Date de depart *</ion-label>
+
+                        <ion-datetime displayFormat="MMM DD YYYY"
+                                      name="dateDepart" [(ngModel)]="vol.dateDepart"
+                                      formControlName="dateDepart">
+                        </ion-datetime>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.dateDepart" [messages]="myform.dateDepartMessages"></s-errors>
+
+                </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Heure de depart *</ion-label>
+
+                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"
+                                      ame="heureDepart" [(ngModel)]="vol.heureDepart"
+                                      formControlName="heureDepart">
+                        </ion-datetime>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.heureDepart" [messages]="myform.heureDepartMessages"></s-errors>
+
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Date d'arrivée *</ion-label>
+
+                        <ion-datetime displayFormat="MMM DD YYYY"
+                                      name="dateArrive" [(ngModel)]="vol.dateArrive"
+                                      formControlName="dateArrive">
+                        </ion-datetime>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.dateArrive" [messages]="myform.dateArriveMessages"></s-errors>
+
+                </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Heure d'arrivée *</ion-label>
+
+                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"
+                                      ame="heureArrive" [(ngModel)]="vol.heureArrive"
+                                      formControlName="heureArrive">
+                        </ion-datetime>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.heureArrive" [messages]="myform.heureArriveMessages"></s-errors>
+
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+
+                        <ion-label floating>Prix * </ion-label>
+
+                        <ion-input type="number"
+                                   name="prix" [(ngModel)]="vol.prix"
+                                   formControlName="prix"> </ion-input>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.prix" [messages]="myform.prixMessages"></s-errors>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+                        <ion-row padding-top text-center>
+                            <ion-col>
+                                <button ion-button small icon-left color="light" (click)="choose()" >
+                                    <ion-icon ios="ios-folder-open"  md="md-folder-open"></ion-icon>
+                                    Choisir Avion
+                                </button>
+
+                            </ion-col>
+                        </ion-row>
+                    </ion-item>
+
+                </ion-col>
+            </ion-row>
+
+            <ion-row padding-top>
+                <ion-col>
+                    <button ion-button color="primary" type="submit"
+                            [disabled]="myform.invalid" block>Ajouter</button>
+                </ion-col>
+            </ion-row>
+
+        </ion-grid>
+
+    </form>
+
+</ion-content>

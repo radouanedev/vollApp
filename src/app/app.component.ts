@@ -20,6 +20,7 @@ export class MyApp {
 
   rootPage: any = HomePage;
   public static isAdmin = false;
+  private connected = false;
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -52,17 +53,26 @@ export class MyApp {
 
            this.dbProvider.getUser(userId).subscribe((user2: any) => {
                if(user) {
-                   const roles = user2._roles;
-                   if(roles.admin) {
-                       this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
-                       MyApp.isAdmin = true;
-                   } else if(roles.user) {
-                       this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
+                   if(!this.connected) {
+                       const roles = user2._roles;
+                       if(roles.admin) {
+                           this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
+                           MyApp.isAdmin = true;
+                       } else if(roles.user) {
+                           this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
+                       }
+                       this.connected = true;
                    }
                }
 
            }, (err)=> {
            });
+       } else {
+           if(this.connected) {
+               this.pages.pop();
+               this.connected = false;
+           }
+
        }
     });
 

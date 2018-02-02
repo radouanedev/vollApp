@@ -36,8 +36,14 @@ export class DatabaseProvider {
   }
 
 
-  getAvions() {
-      return this.db.list("avions").valueChanges();
+  getAvions(limitFirst) {
+      return this.db.list("avions",ref=> ref.limitToFirst(limitFirst) )
+          .valueChanges();
+  }
+
+
+  addVol() {
+
   }
 
 }

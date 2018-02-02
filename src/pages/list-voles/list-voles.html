@@ -5,14 +5,50 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>listVoles</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Liste de nos voles</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-card>
+        <ion-card-header text-center>
+            Casablanca --> Paris
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+
+                <ion-row>
+                    <ion-col>Date de depart : </ion-col><ion-col>10-10-2017</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Heure de depart : </ion-col><ion-col>12:45</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Date d'arrivée : </ion-col><ion-col>10-10-2017</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Heure d'arrivée : </ion-col><ion-col>12:45</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Prix : </ion-col> <ion-col>1000 DH TTC</ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-fab right bottom *ngIf="isAdmin">
+        <button ion-fab color="danger" (click)="gotToAddVol()"><ion-icon name="add" ></ion-icon></button>
+    </ion-fab>
 
 </ion-content>
