@@ -45,6 +45,8 @@ export class ListAvionsPage {
   ionViewDidLoad() {
 
       this.presentloader();
+
+      this.avions = [];
       this.dbProvider.getAvions(this.limit).subscribe(
           avions => {
 

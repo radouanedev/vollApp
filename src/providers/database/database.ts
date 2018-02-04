@@ -62,6 +62,8 @@ export class DatabaseProvider {
 
       vol.cD_cA = vol.countryDepart + "_" + vol.countryArrive;
 
+      vol.nbrePlace = vol.avion.nbrePlcMax;
+
       return volsRef.push(vol);
   }
 
@@ -74,8 +76,12 @@ export class DatabaseProvider {
 
   getVolsByCountry(countryD, countryA) {
       let concact = countryD + "_" + countryA;
+
+      let currentDate = new Date();
+      let currentDateMillis = Date.parse(currentDate.toString());
+
       return this.db.list("vols", ref=>
-          ref.orderByChild('_cD_cA').equalTo(concact))
+          ref.orderByChild('_cD_cA').equalTo(concact).startAt(currentDateMillis,"_dateDepart" ))
           .snapshotChanges();
   }
 

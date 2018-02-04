@@ -45,6 +45,8 @@ export class ListVolesPage {
 
   ionViewDidLoad() {
       this.presentloader();
+
+      this.vols = [];
       this.dbProvider.getVols(this.limit).subscribe(
           vols => {
 
