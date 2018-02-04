@@ -22,14 +22,14 @@
 
 <ion-content padding >
 
-    <ion-card *ngFor="let item of avions" (click)="pickAvion(item)">
+    <ion-card *ngFor="let avion of avions" (click)="pickAvion(avion)">
 
-        <img src="{{item.imageURL}}">
+        <img src="{{avion.imageURL}}">
 
         <ion-item>
-            <h2>{{item._nom}}</h2>
-            <p>{{item._description}}</p>
-            <p>{{item._nbrePlcMax}} max de places</p>
+            <h2>{{avion._nom}}</h2>
+            <p>{{avion._description}}</p>
+            <p>{{avion._nbrePlcMax}} max de places</p>
         </ion-item>
 
     </ion-card>

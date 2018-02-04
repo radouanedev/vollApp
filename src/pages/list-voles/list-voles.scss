@@ -2,4 +2,8 @@ page-list-voles {
   .content {
     background: #e6e6e6;
   }
+
+  .card-header {
+    color: color($colors, primary);
+  }
 }

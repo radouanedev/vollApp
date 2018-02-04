@@ -29,7 +29,7 @@
                         <ion-select submitText="Ok" cancelText="Annuler"
                                     name="countryDepart" [(ngModel)]="vol.countryDepart"
                                     formControlName="countryDepart" >
-                            <ion-option *ngFor="let country of countries" value="{{country.name}}">
+                            <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
                                 {{country.translations.fr}}
                             </ion-option>
                         </ion-select>
@@ -52,7 +52,7 @@
                         <ion-select submitText="Ok" cancelText="Annuler"
                                     name="countryArrive" [(ngModel)]="vol.countryArrive"
                                     formControlName="countryArrive" >
-                            <ion-option *ngFor="let country of countries" value="{{country.name}}">
+                            <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
                                 {{country.translations.fr}}
                             </ion-option>
                         </ion-select>
@@ -161,7 +161,6 @@
             <ion-row>
                 <ion-col>
 
-                    <ion-item>
                         <ion-row padding-top text-center>
                             <ion-col>
                                 <button ion-button small icon-left color="light" (click)="choose()" >
@@ -169,9 +168,10 @@
                                     Choisir Avion
                                 </button>
 
+                                <div><span class="text-md-danger" *ngIf="errorAvion">{{errorAvion}}</span></div>
+
                             </ion-col>
                         </ion-row>
-                    </ion-item>
 
                 </ion-col>
             </ion-row>
@@ -179,7 +179,7 @@
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid" block>Ajouter</button>
+                            [disabled]="myform.invalid || !avion" block>Ajouter</button>
                 </ion-col>
             </ion-row>
 

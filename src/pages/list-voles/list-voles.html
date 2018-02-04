@@ -16,35 +16,51 @@
 
 <ion-content padding>
 
-    <ion-card>
-        <ion-card-header text-center>
-            Casablanca --> Paris
+    <ion-card *ngFor="let vol of vols">
+        <ion-card-header text-center >
+            {{vol.countryDepart}} --> {{vol.countryArrive}}
         </ion-card-header>
         <ion-card-content>
             <ion-grid>
 
                 <ion-row>
-                    <ion-col>Date de depart : </ion-col><ion-col>10-10-2017</ion-col>
+                    <ion-col>Date de depart  </ion-col><ion-col>{{vol.dateDepart}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure de depart : </ion-col><ion-col>12:45</ion-col>
+                    <ion-col>Heure de depart  </ion-col><ion-col>{{vol.heureDepart}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Date d'arrivée : </ion-col><ion-col>10-10-2017</ion-col>
+                    <ion-col>Date d'arrivée  </ion-col><ion-col>{{vol.dateArrive}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure d'arrivée : </ion-col><ion-col>12:45</ion-col>
+                    <ion-col>Heure d'arrivée  </ion-col><ion-col>{{vol.heureArrive}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Prix : </ion-col> <ion-col>1000 DH TTC</ion-col>
+                    <ion-col>Prix </ion-col> <ion-col>{{vol.prix}} DH TTC</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Max de places </ion-col> <ion-col>{{vol.avion.nbrePlcMax}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Places restant </ion-col> <ion-col>{{vol.nbrePlace}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Avion : </ion-col> <ion-col>{{vol.avion.nom}}</ion-col>
                 </ion-row>
             </ion-grid>
         </ion-card-content>
     </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 
     <ion-fab right bottom *ngIf="isAdmin">

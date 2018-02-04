@@ -4,6 +4,7 @@ import {AddAvionModal} from "../../modals/addAvionModal/addAvionModal";
 import {DatabaseProvider} from "../../providers/database/database";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {MyApp} from "../../app/app.component";
+import {Avion} from "../../model/Avion";
 
 
 /**
@@ -22,7 +23,7 @@ export class ListAvionsPage {
 
     private isAdmin = MyApp.isAdmin;
 
-    private avions: any;
+    private avions: Avion[] = [];
 
     private loader;
 
@@ -30,10 +31,11 @@ export class ListAvionsPage {
 
     private isModal = false;
 
+    private indexOfAvions = 0;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private dbProvider: DatabaseProvider,
-              private loadingCtrl: LoadingController, private authProvider: AuthServiceProvider,
-              private viewCtrl: ViewController) {
+              private loadingCtrl: LoadingController, private viewCtrl: ViewController) {
 
       if(navParams.get('isModal'))
           this.isModal = true;
@@ -43,16 +45,23 @@ export class ListAvionsPage {
   ionViewDidLoad() {
 
       this.presentloader();
+      this.dbProvider.getAvions(this.limit).subscribe(
+          avions => {
 
+              this.limit++;
 
-    console.log('ionViewDidLoad ListAvionsPage');
-    this.dbProvider.getAvions(this.limit).subscribe(
-        avions => {
-            this.limit++;
-            this.avions = avions;
-            this.loader.dismiss();
-        }
-    );
+              avions.forEach((avion, index) => {
+                  let _avion = this.dbProvider.buildAvionFromJson(avion);
+                  this.avions.push(_avion);
+                  this.indexOfAvions=index;
+
+              });
+
+              console.log(this.indexOfAvions);
+
+              this.loader.dismiss();
+          }
+      );
   }
 
 
@@ -82,8 +91,17 @@ export class ListAvionsPage {
           this.dbProvider.getAvions(this.limit).subscribe(
               avions => {
                   this.limit++;
-                  console.log(this.limit);
-                  this.avions = avions;
+
+                  avions.forEach((avion, index) => {
+                      if(index > this.indexOfAvions) {
+                          let _avion = this.dbProvider.buildAvionFromJson(avion);
+                          this.avions.push(_avion);
+                          this.indexOfAvions++;
+                      }
+
+                  })
+
+                  console.log(this.indexOfAvions);
               }
           );
 
@@ -94,8 +112,10 @@ export class ListAvionsPage {
   }
 
 
-  pickAvion(item) {
-      this.viewCtrl.dismiss(item);
+  pickAvion(avion: Avion) {
+      if(!this.isModal)
+          return;
+      this.viewCtrl.dismiss(avion);
   }
 
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {User} from "../../model/User";
 import {Avion} from "../../model/Avion";
+import {Vol} from "../../model/Vol";
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -37,14 +38,67 @@ export class DatabaseProvider {
 
 
   getAvions(limitFirst) {
-      return this.db.list("avions",ref=> ref.limitToFirst(limitFirst) )
-          .valueChanges();
+      return this.db.list("avions", ref=> ref.limitToFirst(limitFirst) )
+          .snapshotChanges();
   }
 
 
-  addVol() {
-
+  addVol(vol: Vol) {
+      const volsRef = this.db.list("vols");
+      return volsRef.push(vol);
   }
+
+
+  getVols(limitFirst) {
+      return this.db.list("vols", ref=> ref.limitToFirst(limitFirst) )
+          .snapshotChanges();
+  }
+
+
+  getVolsByCountry(countryD, countryA) {
+      let concact = countryD + "_" + countryA;
+      return this.db.list("vols", ref=>
+          ref.orderByChild('_cD_cA').equalTo(concact))
+          .snapshotChanges();
+  }
+
+
+  buildAvionFromJson(avionJ): Avion{
+      let avion = new Avion();
+      avion.id = avionJ.key;
+      avion.nom = avionJ.payload.val()._nom;
+      avion.description = avionJ.payload.val()._description;
+      avion.nbrePlcMax = avionJ.payload.val()._nbrePlcMax;
+      avion.imageURL = avionJ.payload.val().imageURL;
+      return avion;
+  }
+
+
+  buildVolFromJson(volJ): Vol{
+      let vol = new Vol();
+      vol.id = volJ.key;
+      vol.countryDepart = volJ.payload.val()._countryDepart;
+      vol.countryArrive = volJ.payload.val()._countryArrive;
+      vol.dateDepart = volJ.payload.val()._dateDepart;
+      vol.dateArrive = volJ.payload.val()._dateDepart;
+      vol.heureDepart = volJ.payload.val()._heureDepart;
+      vol.heureArrive = volJ.payload.val()._heureArrive;
+      vol.prix = volJ.payload.val()._prix;
+      vol.nbrePlace = volJ.payload.val()._nbrePlace;
+
+      let avionJ = volJ.payload.val()._avion;
+      let avion = new Avion();
+      avion.id = avionJ._id;
+      avion.nom = avionJ._nom;
+      avion.nbrePlcMax = avionJ._nbrePlcMax;
+
+      vol.avion = avion;
+
+      return vol;
+  }
+
+
+
 
 }
 

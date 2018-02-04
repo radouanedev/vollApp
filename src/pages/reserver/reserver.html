@@ -5,14 +5,76 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>reserver</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Reserver tickets</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+
+    <form novalidate
+          (ngSubmit)="chercher()"
+          [formGroup]="myform">
+
+        <ion-grid>
+
+            <ion-row>
+                <ion-col>
+
+                    <ion-item>
+
+                        <ion-label floating>Pays de depart *</ion-label>
+
+                        <ion-select submitText="Ok" cancelText="Annuler"
+                                    name="countryDepart" [(ngModel)]="searchEl.countryDepart"
+                                    formControlName="countryDepart" >
+                            <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
+                                {{country.translations.fr}}
+                            </ion-option>
+                        </ion-select>
+
+                    </ion-item>
+
+                    <s-errors [control]="myform.controls.countryDepart" [messages]="myform.countryDepartMessages"></s-errors>
+
+                </ion-col>
+            </ion-row>
+
+        <ion-row>
+            <ion-col>
+
+                <ion-item>
+
+                    <ion-label floating>Pays d'arrivée *</ion-label>
+
+                    <ion-select submitText="Ok" cancelText="Annuler"
+                                name="countryArrive" [(ngModel)]="searchEl.countryArrive"
+                                formControlName="countryArrive" >
+                        <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
+                            {{country.translations.fr}}
+                        </ion-option>
+                    </ion-select>
+
+                </ion-item>
+
+                <s-errors [control]="myform.controls.countryArrive" [messages]="myform.countryArriveMessages"></s-errors>
+
+            </ion-col>
+        </ion-row>
+
+        <ion-row padding-top>
+            <ion-col>
+                <button ion-button color="primary" type="submit"
+                        [disabled]="myform.invalid" block>Chercher</button>
+            </ion-col>
+        </ion-row>
+
+        </ion-grid>
+
+    </form>
 
 </ion-content>

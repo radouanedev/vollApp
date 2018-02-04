@@ -29,6 +29,11 @@ export class AddVolModal implements OnInit {
 
     private avionModal;
 
+    private errorAvion;
+
+    private loader;
+
+
     constructor(private countriesProvider: CountriesProvider, private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController, private dbProvider: DatabaseProvider,
                 public viewCtrl: ViewController, private modalCtrl: ModalController,
@@ -37,9 +42,17 @@ export class AddVolModal implements OnInit {
         this.avionModal = this.modalCtrl.create(ListAvionsPage, {isModal: true});
 
         this.avionModal.onDidDismiss(data => {
-            console.log();
+            if(data) {
+                this.avion = data;
+                this.avion.description = null;
+                this.avion.imageURL = null;
+                this.errorAvion = null;
+            }
+            else
+                this.errorAvion = "Choisissez une avion svp";
         });
     }
+
 
     ngOnInit() {
         this.myform = new AddVolForm();
@@ -50,16 +63,44 @@ export class AddVolModal implements OnInit {
         );
     }
 
+
     dismiss() {
         this.viewCtrl.dismiss();
     }
 
+
     addAction() {
-        if (this.myform.invalid)
+        if (this.myform.invalid || !this.avion)
             return;
+
+        this.loader = this.loadingCtrl.create({
+            content: "Attendez svp..."
+        });
+
+        this.loader.present();
+
+        this.vol.avion = this.avion;
+        this.dbProvider.addVol(this.vol).then(
+            _=> {
+                this.loader.dismiss();
+                this.showSuccessAlert();
+                this.dismiss();
+            }
+        );
     }
+
 
     choose() {
         this.avionModal.present();
+    }
+
+
+    showSuccessAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Sccuée!',
+            subTitle: 'Voiture ajoutée avec success!',
+            buttons: ['OK']
+        });
+        alert.present();
     }
 }

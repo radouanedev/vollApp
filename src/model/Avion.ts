@@ -1,10 +1,19 @@
 export class Avion {
 
+    private _id: string = '';
     private _nom: string= ''; private _description: string= '';
     private _nbrePlcMax: number; private _imageURL: string;
 
     constructor() {}
 
+
+    get id(): string {
+        return this._id;
+    }
+
+    set id(value: string) {
+        this._id = value;
+    }
 
     get nom(): string {
         return this._nom;
@@ -38,4 +47,5 @@ export class Avion {
     set imageURL(value: string) {
         this._imageURL = value;
     }
+
 }

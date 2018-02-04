@@ -140,7 +140,7 @@ export class AddAvionModal implements OnInit {
             subTitle: 'Voiture ajoutée avec success!',
             buttons: ['OK']
         });
-        return alert.present();
+        alert.present();
     }
 
 }

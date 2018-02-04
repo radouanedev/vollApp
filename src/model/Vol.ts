@@ -3,11 +3,21 @@ import {Avion} from "./Avion";
 
 export class Vol {
 
+    private _id: string = '';
     private _countryDepart: string= ''; private _countryArrive: string= '';
     private _dateDepart: string= ''; private _heureDepart: string = '';
     private _dateArrive: string= ''; private _heureArrive: string ='';
     private _prix: number; private _avion: Avion = new Avion();
+    private _nbrePlace: number;
 
+
+    get id(): string {
+        return this._id;
+    }
+
+    set id(value: string) {
+        this._id = value;
+    }
 
     get countryDepart(): string {
         return this._countryDepart;
@@ -71,5 +81,14 @@ export class Vol {
 
     set avion(value: Avion) {
         this._avion = value;
+    }
+
+
+    get nbrePlace(): number {
+        return this._nbrePlace;
+    }
+
+    set nbrePlace(value: number) {
+        this._nbrePlace = value;
     }
 }

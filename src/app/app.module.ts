@@ -35,6 +35,7 @@ import {File} from "@ionic-native/file";
 import {AngularFireStorageModule} from "angularfire2/storage";
 import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {AddVolModal} from "../modals/addVolModal/addVolModal";
+import {ReserverPage} from "../pages/reserver/reserver";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {AddVolModal} from "../modals/addVolModal/addVolModal";
       ListAvionsPage,
       AddAvionModal,
       ListVolesPage,
-      AddVolModal
+      AddVolModal,
+      ReserverPage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import {AddVolModal} from "../modals/addVolModal/addVolModal";
       ListAvionsPage,
       AddAvionModal,
       ListVolesPage,
-      AddVolModal
+      AddVolModal,
+      ReserverPage
   ],
   providers: [
       StatusBar,
