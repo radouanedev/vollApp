@@ -98,7 +98,7 @@ export class AddVolModal implements OnInit {
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
             title: 'Sccuée!',
-            subTitle: 'Voiture ajoutée avec success!',
+            subTitle: 'Vole ajoutée avec success!',
             buttons: ['OK']
         });
         alert.present();

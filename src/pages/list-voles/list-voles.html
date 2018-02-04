@@ -24,19 +24,19 @@
             <ion-grid>
 
                 <ion-row>
-                    <ion-col>Date de depart  </ion-col><ion-col>{{vol.dateDepart}}</ion-col>
+                    <ion-col>Date de depart  </ion-col><ion-col>{{vol.dateDepart | mydate}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure de depart  </ion-col><ion-col>{{vol.heureDepart}}</ion-col>
+                    <ion-col>Heure de depart  </ion-col><ion-col>{{vol.dateDepart | mytime}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Date d'arrivée  </ion-col><ion-col>{{vol.dateArrive}}</ion-col>
+                    <ion-col>Date d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mydate}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure d'arrivée  </ion-col><ion-col>{{vol.heureArrive}}</ion-col>
+                    <ion-col>Heure d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mytime}}</ion-col>
                 </ion-row>
 
                 <ion-row>

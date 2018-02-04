@@ -8,7 +8,7 @@ export class Vol {
     private _dateDepart: string= ''; private _heureDepart: string = '';
     private _dateArrive: string= ''; private _heureArrive: string ='';
     private _prix: number; private _avion: Avion = new Avion();
-    private _nbrePlace: number;
+    private _nbrePlace: number; private _cD_cA: string = '';
 
 
     get id(): string {
@@ -17,7 +17,7 @@ export class Vol {
 
     set id(value: string) {
         this._id = value;
-    }
+    }private _b
 
     get countryDepart(): string {
         return this._countryDepart;
@@ -91,4 +91,15 @@ export class Vol {
     set nbrePlace(value: number) {
         this._nbrePlace = value;
     }
+
+
+    get cD_cA(): string {
+        return this._cD_cA;
+    }
+
+    set cD_cA(value: string) {
+        this._cD_cA = value;
+    }
+
+
 }

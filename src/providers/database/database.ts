@@ -45,6 +45,23 @@ export class DatabaseProvider {
 
   addVol(vol: Vol) {
       const volsRef = this.db.list("vols");
+
+      vol.id = null;
+
+      let datetimeDepart = vol.dateDepart + " " + vol.heureDepart;
+      let datetimeArrive = vol.dateArrive + " " + vol.heureArrive;
+
+      vol.heureDepart = null;
+      vol.heureArrive = null;
+
+      let datetimeDepartMilli = Date.parse(datetimeDepart);
+      let datetimeArriveMilli = Date.parse(datetimeArrive);
+
+      vol.dateDepart = datetimeDepartMilli + "";
+      vol.dateArrive = datetimeArriveMilli + "";
+
+      vol.cD_cA = vol.countryDepart + "_" + vol.countryArrive;
+
       return volsRef.push(vol);
   }
 

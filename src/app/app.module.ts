@@ -36,6 +36,7 @@ import {AngularFireStorageModule} from "angularfire2/storage";
 import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {AddVolModal} from "../modals/addVolModal/addVolModal";
 import {ReserverPage} from "../pages/reserver/reserver";
+import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
 
 
 @NgModule({
@@ -52,7 +53,10 @@ import {ReserverPage} from "../pages/reserver/reserver";
       AddAvionModal,
       ListVolesPage,
       AddVolModal,
-      ReserverPage
+      ReserverPage,
+      MydatePipe,
+      MytimePipe
+
   ],
   imports: [
     BrowserModule,

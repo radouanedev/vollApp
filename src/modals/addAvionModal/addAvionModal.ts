@@ -137,7 +137,7 @@ export class AddAvionModal implements OnInit {
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
             title: 'Sccuée!',
-            subTitle: 'Voiture ajoutée avec success!',
+            subTitle: 'Avion ajoutée avec success!',
             buttons: ['OK']
         });
         alert.present();
