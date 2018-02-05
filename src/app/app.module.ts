@@ -37,6 +37,8 @@ import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {AddVolModal} from "../modals/addVolModal/addVolModal";
 import {ReserverPage} from "../pages/reserver/reserver";
 import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
+import {AngularFirestoreModule} from "angularfire2/firestore";
+import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
 
 
 @NgModule({
@@ -55,7 +57,8 @@ import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
       AddVolModal,
       ReserverPage,
       MydatePipe,
-      MytimePipe
+      MytimePipe,
+      ListVolsModal
 
   ],
   imports: [
@@ -66,7 +69,8 @@ import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
       AngularFireModule.initializeApp(firebaseConfig),
       AngularFireAuthModule,
       AngularFireDatabaseModule,
-      AngularFireStorageModule
+      AngularFireStorageModule,
+      AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +85,8 @@ import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
       AddAvionModal,
       ListVolesPage,
       AddVolModal,
-      ReserverPage
+      ReserverPage,
+      ListVolsModal
   ],
   providers: [
       StatusBar,

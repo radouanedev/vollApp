@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {FormGroup} from "@angular/forms";
 import {ReserverForm} from "../../forms/ReserverForm";
 import {CountriesProvider} from "../../providers/countries/countries";
 import {DatabaseProvider} from "../../providers/database/database";
+import {ListVolsModal} from "../../modals/listVolsModal/listVolsModal";
 
 /**
  * Generated class for the ReserverPage page.
@@ -29,7 +30,8 @@ export class ReserverPage implements OnInit {
     };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private countriesProvider: CountriesProvider, private dbProvider: DatabaseProvider) {
+              private countriesProvider: CountriesProvider, private dbProvider: DatabaseProvider,
+              private modalCtrl: ModalController) {
   }
 
 
@@ -52,17 +54,14 @@ export class ReserverPage implements OnInit {
       if(this.myform.invalid)
           return;
 
+      let modal = this.modalCtrl.create(ListVolsModal, {
+          countryDepart: this.searchEl.countryDepart,
+          countryArrive: this.searchEl.countryArrive
+      });
 
-      this.dbProvider.getVolsByCountry(this.searchEl.countryDepart, this.searchEl.countryArrive)
-          .subscribe(
-              vols => {
+      modal.present();
 
-                  vols.forEach((vol) => {
-                      console.log(vol.payload.val());
-                  });
 
-              }
-          );
     }
 
 }

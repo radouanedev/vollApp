@@ -37,9 +37,6 @@ export class ListVolesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private loadingCtrl: LoadingController,
               private dbProvider: DatabaseProvider,) {
-
-      if(navParams.get('isModal'))
-          this.isModal = true;
   }
 
 

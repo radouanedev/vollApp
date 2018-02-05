@@ -1,7 +1,7 @@
 export class Avion {
 
-    private _id: string = '';
-    private _nom: string= ''; private _description: string= '';
+    private _id: string;
+    private _nom: string; private _description: string;
     private _nbrePlcMax: number; private _imageURL: string;
 
     constructor() {}

@@ -3,6 +3,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {User} from "../../model/User";
 import {Avion} from "../../model/Avion";
 import {Vol} from "../../model/Vol";
+import {Ticket} from "../../model/Ticket";
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -81,7 +82,7 @@ export class DatabaseProvider {
       let currentDateMillis = Date.parse(currentDate.toString());
 
       return this.db.list("vols", ref=>
-          ref.orderByChild('_cD_cA').equalTo(concact).startAt(currentDateMillis,"_dateDepart" ))
+          ref.orderByChild('_cD_cA').equalTo(concact))
           .snapshotChanges();
   }
 
@@ -121,6 +122,10 @@ export class DatabaseProvider {
   }
 
 
+  addTicket(ticket: Ticket) {
+      const ticketsRef = this.db.list("tickets");
+      return ticketsRef.push(ticket);
+  }
 
 
 }

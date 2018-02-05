@@ -3,12 +3,12 @@ import {Avion} from "./Avion";
 
 export class Vol {
 
-    private _id: string = '';
-    private _countryDepart: string= ''; private _countryArrive: string= '';
-    private _dateDepart: string= ''; private _heureDepart: string = '';
-    private _dateArrive: string= ''; private _heureArrive: string ='';
-    private _prix: number; private _avion: Avion = new Avion();
-    private _nbrePlace: number; private _cD_cA: string = '';
+    private _id: string;
+    private _countryDepart: string; private _countryArrive: string;
+    private _dateDepart: string; private _heureDepart: string;
+    private _dateArrive: string; private _heureArrive: string;
+    private _prix: number; private _avion: Avion;
+    private _nbrePlace: number; private _cD_cA: string ;
 
 
     get id(): string {

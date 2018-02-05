@@ -1,16 +1,25 @@
 export class User {
 
-  private _email: string=''; private _password: string='';
-  private _nom: string=''; private _prenom: string='';
-  private _dateNaiss: string = ''; private _cin: string;
-  private _tel: string = ''; private _nationnalite: string = '';
-  private _roles: any = {user: true};
+    private _id: string;
+  private _email: string; private _password: string;
+  private _nom: string; private _prenom: string;
+  private _dateNaiss: string ; private _cin: string;
+  private _tel: string; private _nationnalite: string;
+  private _roles: any;
 
   constructor() {
   }
 
 
-  get email(): string {
+    get id(): string {
+        return this._id;
+    }
+
+    set id(value: string) {
+        this._id = value;
+    }
+
+    get email(): string {
     return this._email;
   }
 
