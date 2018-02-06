@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import {LoadingController, Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,6 +10,11 @@ import {DatabaseProvider} from "../providers/database/database";
 import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {ListAvionsPage} from "../pages/list-avions/list-avions";
 import {ReserverPage} from "../pages/reserver/reserver";
+import { Globalization } from '@ionic-native/globalization';
+import { NativeStorage } from '@ionic-native/native-storage';
+import {SpecificWords} from "../config/environment";
+import {words} from "../translate/words";
+
 
 
 @Component({
@@ -20,12 +25,26 @@ export class MyApp {
 
   rootPage: any = HomePage;
   public static isAdmin = false;
-  private connected = false;
+  public static connected = false;
+
+  private loader;
 
   pages: Array<{title: string, component: any, icon: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider) {
+              private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider,
+              private loadingCtrl: LoadingController, private globalization: Globalization) {
+
+      /*this.globalization.getPreferredLanguage().then(res=>{
+          if(res.value == "fr-FR") {
+              SpecificWords.myWords = words.french;
+          } else if(res.value == "en-EN") {
+              SpecificWords.myWords = words.english;
+          }
+      })*/
+
+
+
     this.initializeApp();
 
 
@@ -39,7 +58,14 @@ export class MyApp {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+
+      this.loader = this.loadingCtrl.create({
+          content: "Attendez svp..."
+      });
+
+      this.loader.present();
+
+      this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
@@ -53,7 +79,7 @@ export class MyApp {
 
            this.dbProvider.getUser(userId).subscribe((user2: any) => {
                if(user) {
-                   if(!this.connected) {
+                   if(!MyApp.connected) {
                        const roles = user2._roles;
                        if(roles.admin) {
                            this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
@@ -61,17 +87,20 @@ export class MyApp {
                        } else if(roles.user) {
                            this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
                        }
-                       this.connected = true;
+                       MyApp.connected = true;
                    }
                }
+               this.loader.dismiss();
 
            }, (err)=> {
            });
        } else {
-           if(this.connected) {
+           if(MyApp.connected) {
                this.pages.pop();
-               this.connected = false;
+               MyApp.connected = false;
            }
+
+           this.loader.dismiss();
 
        }
     });

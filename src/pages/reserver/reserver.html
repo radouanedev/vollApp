@@ -9,12 +9,17 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Reserver tickets</ion-title>
+        <ion-title>{{words.reserve_string}}</ion-title>
+
+        <ion-buttons end>
+            <mytoolbar></mytoolbar>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+
 
     <form novalidate
           (ngSubmit)="chercher()"

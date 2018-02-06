@@ -39,6 +39,10 @@ import {ReserverPage} from "../pages/reserver/reserver";
 import {MydatePipe, MytimePipe} from "../pipes/mydatePipe";
 import {AngularFirestoreModule} from "angularfire2/firestore";
 import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
+import {MyToolBarComponent} from "../toolBarComponent/toolBarComponent";
+import {MyPopOver} from "../toolBarComponent/popOver";
+import { Globalization } from '@ionic-native/globalization';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 @NgModule({
@@ -58,7 +62,9 @@ import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
       ReserverPage,
       MydatePipe,
       MytimePipe,
-      ListVolsModal
+      ListVolsModal,
+      MyToolBarComponent,
+      MyPopOver
 
   ],
   imports: [
@@ -70,7 +76,7 @@ import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
       AngularFireAuthModule,
       AngularFireDatabaseModule,
       AngularFireStorageModule,
-      AngularFirestoreModule
+      AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -86,7 +92,8 @@ import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
       ListVolesPage,
       AddVolModal,
       ReserverPage,
-      ListVolsModal
+      ListVolsModal,
+      MyPopOver
   ],
   providers: [
       StatusBar,
@@ -100,7 +107,10 @@ import {ListVolsModal} from "../modals/listVolsModal/listVolsModal";
       ImagePicker,
       FileChooser,
       FilePath,
-      File
+      File,
+      Globalization,
+      NativeStorage
+
   ]
 })
 export class AppModule {}

@@ -107,6 +107,8 @@ export class ListVolsModal implements OnInit {
 
                 this.dbProvider.addTicket(ticket).then(res => {
 
+                    //this.dbProvider.updateVolAfterReserve(vol.id);
+
                     this.loader.dismiss();
 
                     this.showSuccessAlert();

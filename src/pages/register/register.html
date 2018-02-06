@@ -11,6 +11,9 @@
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Inscription</ion-title>
+        <ion-buttons end>
+            <mytoolbar></mytoolbar>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -39,9 +42,6 @@
             </button>
         </ion-row>
 
-        <ion-row *ngIf="userProfile">
-            <h3>hhhhhh : {{userProfile.displayName}}, {{userProfile.email}}</h3>
-        </ion-row>
     </ion-grid>
 
   </ion-content>

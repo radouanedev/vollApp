@@ -7,3 +7,13 @@ export const firebaseConfig = {
   messagingSenderId: "889502691124"
 }
 
+
+export class SpecificWords {
+
+    public static myWords: any = {};
+
+    constructor() {
+    }
+
+}
+

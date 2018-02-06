@@ -5,6 +5,7 @@ import {ReserverForm} from "../../forms/ReserverForm";
 import {CountriesProvider} from "../../providers/countries/countries";
 import {DatabaseProvider} from "../../providers/database/database";
 import {ListVolsModal} from "../../modals/listVolsModal/listVolsModal";
+import {SpecificWords} from "../../config/environment";
 
 /**
  * Generated class for the ReserverPage page.
@@ -29,9 +30,13 @@ export class ReserverPage implements OnInit {
         countryArrive: ''
     };
 
+    private words;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private countriesProvider: CountriesProvider, private dbProvider: DatabaseProvider,
               private modalCtrl: ModalController) {
+
+      this.words = SpecificWords.myWords;
   }
 
 

@@ -10,6 +10,10 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Inscription</ion-title>
+
+      <ion-buttons end>
+          <mytoolbar></mytoolbar>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -121,9 +125,8 @@
                     </ion-label>
 
                     <ion-select submitText="Ok" cancelText="Annuler" name="code" formControlName="code">
-                        <ion-option></ion-option>
                         <ion-option *ngFor="let country of countries" value="{{country.numericCode}}">
-                             + {{country.numericCode}}&nbsp; {{country.translations.fr}}
+                              {{country.numericCode}}&nbsp; {{country.translations.fr}}
                         </ion-option>
                     </ion-select>
 

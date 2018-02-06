@@ -3,11 +3,13 @@
         <ion-title>
             Ajouter une avion
         </ion-title>
-        <ion-buttons start>
-            <button ion-button (click)="dismiss()">
+        <ion-buttons end>
+            <button ion-button (click)="dismiss()" end>
                 <span ion-text color="primary" showWhen="ios">Annuler</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
+
+            <mytoolbar></mytoolbar>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>

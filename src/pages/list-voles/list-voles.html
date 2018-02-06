@@ -10,13 +10,26 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Liste de nos voles</ion-title>
+        <ion-buttons end>
+            <mytoolbar></mytoolbar>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-card *ngFor="let vol of vols" >
+    <ion-card *ngFor="let vol of vols">
+
+        <ion-fab >
+            <button color="primary" ion-fab mini>
+                <ion-icon ios="ios-arrow-down" md="md-arrow-down"></ion-icon>
+            </button>
+            <ion-fab-list side="bottom">
+                <button ion-fab color="secondary" (click)="edit(vol)"> <ion-icon ios="ios-create" md="md-create"></ion-icon></button>
+                <button ion-fab color="danger" (click)="delete(vol.id)">  <ion-icon ios="ios-remove" md="md-remove"></ion-icon></button>
+            </ion-fab-list>
+        </ion-fab>
         <ion-card-header text-center >
             {{vol.countryDepart}} --> {{vol.countryArrive}}
         </ion-card-header>

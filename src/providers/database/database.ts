@@ -22,6 +22,9 @@ export class DatabaseProvider {
   addUser(userId: string, user: User) {
       user.password = null;
       user.email = null;
+      user.roles = {
+        user: true
+      };
       const usersRef = this.db.list("users");
       return usersRef.set(userId, user);
   }
@@ -68,6 +71,40 @@ export class DatabaseProvider {
       return volsRef.push(vol);
   }
 
+  editVol(vol: Vol) {
+      const volRef = this.db.object('vols/'+vol.id);
+
+      let _vol = vol;
+
+      _vol.id = null;
+
+      let datetimeDepart = _vol.dateDepart + " " + _vol.heureDepart;
+      let datetimeArrive = _vol.dateArrive + " " + _vol.heureArrive;
+
+      _vol.heureDepart = null;
+      _vol.heureArrive = null;
+
+      let datetimeDepartMilli = Date.parse(datetimeDepart);
+      let datetimeArriveMilli = Date.parse(datetimeArrive);
+
+      _vol.dateDepart = datetimeDepartMilli + "";
+      _vol.dateArrive = datetimeArriveMilli + "";
+
+      return volRef.update(_vol);
+
+  }
+
+
+  updateVolAfterReserve(id) {
+      const volRef = this.db.object('vols/'+id);
+      this.db.object('vols'+id).valueChanges().subscribe(
+          (vol: any) => {
+              let newNbrePlace = --vol._nbrePlace;
+              volRef.update({_nbrePlace: newNbrePlace});
+          }
+      );
+  }
+
 
   getVols(limitFirst) {
       return this.db.list("vols", ref=> ref.limitToFirst(limitFirst) )
@@ -99,14 +136,13 @@ export class DatabaseProvider {
 
 
   buildVolFromJson(volJ): Vol{
+
       let vol = new Vol();
       vol.id = volJ.key;
       vol.countryDepart = volJ.payload.val()._countryDepart;
       vol.countryArrive = volJ.payload.val()._countryArrive;
       vol.dateDepart = volJ.payload.val()._dateDepart;
-      vol.dateArrive = volJ.payload.val()._dateDepart;
-      vol.heureDepart = volJ.payload.val()._heureDepart;
-      vol.heureArrive = volJ.payload.val()._heureArrive;
+      vol.dateArrive = volJ.payload.val()._dateArrive;
       vol.prix = volJ.payload.val()._prix;
       vol.nbrePlace = volJ.payload.val()._nbrePlace;
 

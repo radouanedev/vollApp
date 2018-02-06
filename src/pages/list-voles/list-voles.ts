@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
 import {AddAvionModal} from "../../modals/addAvionModal/addAvionModal";
 import {MyApp} from "../../app/app.component";
 import {AddVolModal} from "../../modals/addVolModal/addVolModal";
@@ -33,10 +33,18 @@ export class ListVolesPage {
 
     private indexOfVols = 0;
 
+    private volModal;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private loadingCtrl: LoadingController,
-              private dbProvider: DatabaseProvider,) {
+              private dbProvider: DatabaseProvider, private viewCtrl: ViewController) {
+
+      this.volModal = this.modalCtrl.create(AddVolModal);
+
+      this.volModal.onDidDismiss(_=> {
+          this.navCtrl.setRoot(ListVolesPage);
+      });
   }
 
 
@@ -93,8 +101,18 @@ export class ListVolesPage {
 
 
   gotToAddVol() {
-      let volModal = this.modalCtrl.create(AddVolModal);
-      volModal.present();
+      this.volModal.present();
+  }
+
+
+  edit(vol) {
+      this.volModal = this.modalCtrl.create(AddVolModal, {vol: vol});
+      this.volModal.present();
+  }
+
+
+  delete(id) {
+
   }
 
 

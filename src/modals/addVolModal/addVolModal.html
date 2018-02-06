@@ -3,11 +3,13 @@
         <ion-title>
             Ajouter un Vole
         </ion-title>
-        <ion-buttons start>
+        <ion-buttons end>
             <button ion-button (click)="dismiss()">
                 <span ion-text color="primary" showWhen="ios">Annuler</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
+
+            <mytoolbar></mytoolbar>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -179,7 +181,10 @@
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid || !avion" block>Ajouter</button>
+                            [disabled]="myform.invalid || !avion" block>
+                        <span *ngIf="isUpdate">Modifier</span>
+                        <span *ngIf="!isUpdate">Ajouter</span>
+                    </button>
                 </ion-col>
             </ion-row>
 

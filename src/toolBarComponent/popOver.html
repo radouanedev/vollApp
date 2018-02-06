@@ -1,0 +1,8 @@
+<ion-list>
+    <button ion-item  (click)="deconnecter()" *ngIf="isConnected">
+        Se deconnecter
+    </button>
+    <button ion-item (click)="goToConnect()" *ngIf="!isConnected">
+        Se connecter
+    </button>
+</ion-list>

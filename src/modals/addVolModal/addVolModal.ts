@@ -33,6 +33,8 @@ export class AddVolModal implements OnInit {
 
     private loader;
 
+    private isUpdate=false;
+
 
     constructor(private countriesProvider: CountriesProvider, private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController, private dbProvider: DatabaseProvider,
@@ -55,6 +57,27 @@ export class AddVolModal implements OnInit {
 
 
     ngOnInit() {
+
+        if(this.navParams.get('vol')) {
+            this.vol = this.navParams.get('vol');
+            let dateDepart = this.convertDateMilliToString(this.vol.dateDepart);
+            let dateArrive = this.convertDateMilliToString(this.vol.dateArrive);
+
+            console.log(this.vol.dateDepart);
+            console.log(this.vol.dateArrive);
+
+            this.vol.heureDepart = this.convertTimeMilliToString(this.vol.dateDepart);
+            this.vol.heureArrive = this.convertTimeMilliToString(this.vol.dateArrive);
+
+            this.vol.dateDepart = dateDepart;
+            this.vol.dateArrive = dateArrive;
+
+            this.avion = this.vol.avion;
+
+            this.isUpdate = true;
+
+        }
+
         this.myform = new AddVolForm();
         this.countriesProvider.getAllcountry().subscribe(
             (res: any) => {
@@ -79,14 +102,29 @@ export class AddVolModal implements OnInit {
 
         this.loader.present();
 
-        this.vol.avion = this.avion;
-        this.dbProvider.addVol(this.vol).then(
-            _=> {
-                this.loader.dismiss();
-                this.showSuccessAlert();
-                this.dismiss();
-            }
-        );
+        if(this.isUpdate) {
+
+            this.vol.avion = this.avion;
+            this.dbProvider.editVol(this.vol).then(
+                _=> {
+                    this.loader.dismiss();
+                    this.showSuccessAlert('Vole modifier avec success!');
+                    this.dismiss();
+                }
+            )
+
+        } else {
+            this.vol.avion = this.avion;
+            this.dbProvider.addVol(this.vol).then(
+                _=> {
+                    this.loader.dismiss();
+                    this.showSuccessAlert('Vole ajouter avec success!');
+                    this.dismiss();
+                }
+            );
+        }
+
+
     }
 
 
@@ -95,12 +133,42 @@ export class AddVolModal implements OnInit {
     }
 
 
-    showSuccessAlert() {
+    showSuccessAlert(message) {
         let alert = this.alertCtrl.create({
             title: 'Sccuée!',
-            subTitle: 'Vole ajoutée avec success!',
+            subTitle: message,
             buttons: ['OK']
         });
         alert.present();
+    }
+
+
+    convertDateMilliToString(millisecond): string {
+
+        let dateMilli = parseInt(millisecond);
+        let date = new Date(dateMilli);
+
+        let year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+
+        let monthString = month + "";
+        let dayString = day + "";
+
+        if(month < 10)
+            monthString = "0" + month;
+        if(day < 10)
+            dayString = "0" + day;
+
+        return year + '-' + monthString + '-' + dayString;
+    }
+
+
+    convertTimeMilliToString(millisecond): string {
+
+        let dateMilli = parseInt(millisecond);
+        let date = new Date(dateMilli);
+
+        return date.getHours() + ":" + date.getMinutes();
     }
 }
