@@ -1,23 +1,78 @@
+<!--
+  Generated template for the ListVolesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>List</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title> <span style="font-size: 17px">Clicker sur un vole pour le reserver</span></ion-title>
+        <ion-buttons end>
+            <mytoolbar></mytoolbar>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+<ion-content padding>
+
+    <ion-card *ngFor="let vol of vols; let i = index" (click)="pickVol(vol,i)">
+
+        <ion-card-header text-center >
+            {{vol.countryDepart}} --> {{vol.countryArrive}}
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+
+                <ion-row>
+                    <ion-col>Date de depart  </ion-col><ion-col>{{vol.dateDepart | mydate}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Heure de depart  </ion-col><ion-col>{{vol.dateDepart | mytime}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Date d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mydate}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Heure d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mytime}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Prix </ion-col> <ion-col>{{vol.prix}} DH TTC</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Max de places </ion-col> <ion-col>{{vol.avion.nbrePlcMax}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Places restant </ion-col> <ion-col>{{vol.nbrePlace}}</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Avion : </ion-col> <ion-col>{{vol.avion.nom}}</ion-col>
+                    <ion-fab end *ngIf="ind == i">
+                        <button color="success" ion-fab mini>
+                            <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-row>
+            </ion-grid>
+
+        </ion-card-content>
+
+
+    </ion-card>
+
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
 </ion-content>

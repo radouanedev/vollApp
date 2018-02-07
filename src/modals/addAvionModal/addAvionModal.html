@@ -8,8 +8,6 @@
                 <span ion-text color="primary" showWhen="ios">Annuler</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
-
-            <mytoolbar></mytoolbar>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -80,11 +78,16 @@
                 </ion-col>
             </ion-row>
 
+            <ion-row text-center>
+                <ion-col>
+                    <img *ngIf="imageURL"  [src]="imageURL" padding width="50%" height="230px">
+                </ion-col>
+            </ion-row>
 
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid || !imageURL" block>Ajouter</button>
+                            [disabled]="myform.invalid" block>Ajouter</button>
                 </ion-col>
             </ion-row>
 

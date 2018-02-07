@@ -6,6 +6,7 @@ import {CountriesProvider} from "../../providers/countries/countries";
 import {DatabaseProvider} from "../../providers/database/database";
 import {ListVolsModal} from "../../modals/listVolsModal/listVolsModal";
 import {SpecificWords} from "../../config/environment";
+import {MyApp} from "../../app/app.component";
 
 /**
  * Generated class for the ReserverPage page.
@@ -20,6 +21,8 @@ import {SpecificWords} from "../../config/environment";
   templateUrl: 'reserver.html',
 })
 export class ReserverPage implements OnInit {
+
+    private isConnected = MyApp.connected;
 
     private myform: FormGroup;
 

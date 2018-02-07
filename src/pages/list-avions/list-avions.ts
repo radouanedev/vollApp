@@ -42,6 +42,8 @@ export class ListAvionsPage {
       if(navParams.get('isModal'))
           this.isModal = true;
 
+
+
   }
 
   ionViewDidLoad() {
@@ -117,12 +119,11 @@ export class ListAvionsPage {
 
 
   pickAvion(avion: Avion, i) {
-      if(!this.isModal)
+      if(this.ind > -1)
           return;
 
       this.ind = i;
 
-      this.isModal = false;
       setTimeout(()=> {
           this.viewCtrl.dismiss(avion);
       }, 800);

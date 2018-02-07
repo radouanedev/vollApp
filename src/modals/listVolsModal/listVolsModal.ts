@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Vol} from "../../model/Vol";
 import {
-    AlertController, LoadingController, ModalController, NavController, NavParams,
+    AlertController, App, LoadingController, ModalController, NavController, NavParams,
     ViewController
 } from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
@@ -9,6 +9,8 @@ import {Ticket} from "../../model/Ticket";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {User} from "../../model/User";
 import {NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR} from "@angular/core/src/view/provider";
+import {MyApp} from "../../app/app.component";
+import {LoginPage} from "../../pages/login/login";
 
 @Component({
     templateUrl : 'listVolsModal.html',
@@ -16,9 +18,16 @@ import {NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR} from "@angular/core/src/view/prov
 })
 export class ListVolsModal implements OnInit {
 
+    private isConnected = MyApp.connected;
+    private isAdmin = MyApp.isAdmin;
+
     private vols:Vol[] = [];
 
     private loader;
+
+    private limit = 3;
+
+    private indexOfVols = 0;
 
     private countryDepart = '';
     private countryArrive = '';
@@ -28,7 +37,8 @@ export class ListVolsModal implements OnInit {
     constructor(private navCtrl: NavController, private navParams: NavParams,
                 public viewCtrl: ViewController, private modalCtrl: ModalController,
                 private alertCtrl: AlertController, private loadingCtrl: LoadingController,
-                private dbProvider: DatabaseProvider, private authProvider: AuthServiceProvider) {
+                private dbProvider: DatabaseProvider, private authProvider: AuthServiceProvider,
+                private appNav: App) {
 
 
         this.countryDepart = this.navParams.get('countryDepart');
@@ -44,18 +54,58 @@ export class ListVolsModal implements OnInit {
             .subscribe(
                 vols => {
                     this.vols = [];
-                    vols.forEach((vol) => {
+                    this.limit++;
+                    vols.forEach((vol,index) => {
                         let _vol = this.dbProvider.buildVolFromJson(vol);
                         this.vols.push(_vol);
-
+                        this.indexOfVols=index;
                     });
                     this.loader.dismiss();
                 }
             );
     }
 
+    doInfinite(infiniteScroll) {
+
+        setTimeout(()=> {
+
+            this.dbProvider.getVols(this.limit).subscribe(
+                vols => {
+                    this.limit++;
+
+                    vols.forEach((vol, index) => {
+                        if(index > this.indexOfVols) {
+                            let _vol = this.dbProvider.buildVolFromJson(vol);
+                            this.vols.push(_vol);
+                            this.indexOfVols++;
+                        }
+
+                    })
+
+                    console.log(this.indexOfVols);
+                }
+            );
+
+            infiniteScroll.complete();
+
+        },700);
+
+    }
+
     pickVol(vol,i) {
-        if(this.ind > 0)
+
+        if(this.isAdmin)
+            return;
+
+        if(!this.isConnected) {
+            setTimeout(()=> {
+                this.viewCtrl.dismiss();
+                this.appNav.getRootNav().setRoot(LoginPage, {reserver: true});
+            });
+            return;
+        }
+
+        if(this.ind > -1)
             return;
 
         this.ind = i;
@@ -63,7 +113,7 @@ export class ListVolsModal implements OnInit {
         setTimeout(() => {
             let alert = this.alertCtrl.create({
                 title: 'Confirm reservation',
-                message: 'vous étes sure de choisir ce vol?',
+                message: 'vous étes sure de reserver ce vol?',
                 buttons: [
                     {
                         text: 'Annuler',
@@ -86,7 +136,24 @@ export class ListVolsModal implements OnInit {
 
         this.presentloader();
 
-        let ticket = new Ticket();
+
+        this.authProvider.checkConnection().subscribe(user => {
+
+            let userId = user.uid;
+
+            this.dbProvider.getUser(userId).subscribe((user2: any)=> {
+                this.dbProvider.addTicket(vol, user2, userId).then(
+                    res => {
+                        this.showSuccessAlert();
+
+                        this.viewCtrl.dismiss();
+                    }
+                );
+            });
+
+        });
+
+        /*let ticket = new Ticket();
 
         let _vol = new Vol();
 
@@ -126,7 +193,7 @@ export class ListVolsModal implements OnInit {
 
                 });
             });
-        });
+        });*/
 
     }
 

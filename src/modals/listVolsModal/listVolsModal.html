@@ -7,15 +7,13 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Liste des vols
+            Reserver un vol
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
                 <span ion-text color="primary" showWhen="ios">Annuler</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
-
-            <mytoolbar></mytoolbar>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -68,12 +66,15 @@
                 </ion-row>
             </ion-grid>
 
-
-
         </ion-card-content>
 
 
     </ion-card>
+
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 
 </ion-content>

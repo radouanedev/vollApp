@@ -61,7 +61,6 @@ export class AddAvionModal implements OnInit {
 
         this.fileChooser.open().then(
             uri => {
-
                 if(this.imageURL) {
                     this.imageURL = uri;
                     return;
@@ -74,6 +73,11 @@ export class AddAvionModal implements OnInit {
                     this.imageURL = uri;
                     this.imageError = null;
                 }
+
+                this.fileUtils.readAsDataURL(this.imageURL).then(fileUrl => {
+                    this.imageURL = fileUrl;
+                    alert(this.imageURL);
+                });
             }
         );
 
@@ -82,8 +86,8 @@ export class AddAvionModal implements OnInit {
 
     addAvion() {
 
-        if(!this.imageURL)
-            return;
+        /*if(!this.imageURL)
+            return;*/
 
         let blob = new Blob()
 

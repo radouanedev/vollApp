@@ -35,6 +35,8 @@ export class AddVolModal implements OnInit {
 
     private isUpdate=false;
 
+    private recentVol = new Vol();
+
 
     constructor(private countriesProvider: CountriesProvider, private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController, private dbProvider: DatabaseProvider,
@@ -49,18 +51,31 @@ export class AddVolModal implements OnInit {
     ngOnInit() {
 
         if(this.navParams.get('vol')) {
-            this.vol = this.navParams.get('vol');
-            let dateDepart = this.convertDateMilliToString(this.vol.dateDepart);
-            let dateArrive = this.convertDateMilliToString(this.vol.dateArrive);
 
-            console.log(this.vol.dateDepart);
-            console.log(this.vol.dateArrive);
+            this.recentVol = this.navParams.get('vol');
 
-            this.vol.heureDepart = this.convertTimeMilliToString(this.vol.dateDepart);
-            this.vol.heureArrive = this.convertTimeMilliToString(this.vol.dateArrive);
+            this.vol.id = this.recentVol.id;
+            this.vol.countryDepart = this.recentVol.countryDepart;
+            this.vol.countryArrive = this.recentVol.countryArrive;
+            this.vol.prix = this.recentVol.prix;
+            this.vol.avion = this.recentVol.avion;
+            this.vol.cD_cA = this.recentVol.cD_cA;
+            this.vol.nbrePlace = this.recentVol.nbrePlace;
+
+            let dateDepart = this.convertDateMilliToString(this.recentVol.dateDepart);
+            let dateArrive = this.convertDateMilliToString(this.recentVol.dateArrive);
+
+            let heureDepart = this.convertTimeMilliToString(this.recentVol.dateDepart);
+            let heureArrive = this.convertTimeMilliToString(this.recentVol.dateArrive);
+
+            console.log(heureDepart);
+            console.log(heureArrive);
 
             this.vol.dateDepart = dateDepart;
             this.vol.dateArrive = dateArrive;
+
+            this.vol.heureDepart = heureDepart;
+            this.vol.heureArrive = heureArrive;
 
             this.avion = this.vol.avion;
 
@@ -70,16 +85,16 @@ export class AddVolModal implements OnInit {
 
         this.avionModal.onDidDismiss(data => {
 
-            if(!this.avion) {
                 if(data) {
                     this.avion = data;
                     this.avion.description = null;
                     this.avion.imageURL = null;
                     this.errorAvion = null;
+                    console.log(this.avion.nom);
+                    this.vol.avion = this.avion;
                 }
                 else
                     this.errorAvion = "Choisissez une avion svp";
-            }
         });
 
         this.myform = new AddVolForm();
@@ -110,9 +125,9 @@ export class AddVolModal implements OnInit {
 
         if(this.isUpdate) {
 
-            this.vol.avion = this.avion;
             this.dbProvider.editVol(this.vol).then(
                 _=> {
+                    this.recentVol = this.vol;
                     this.loader.dismiss();
                     this.showSuccessAlert('Vole modifier avec success!');
                     this.dismiss();
@@ -120,7 +135,6 @@ export class AddVolModal implements OnInit {
             )
 
         } else {
-            this.vol.avion = this.avion;
             this.dbProvider.addVol(this.vol).then(
                 _=> {
                     this.loader.dismiss();
@@ -175,6 +189,17 @@ export class AddVolModal implements OnInit {
         let dateMilli = parseInt(millisecond);
         let date = new Date(dateMilli);
 
-        return date.getHours() + ":" + date.getMinutes();
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+
+        let hoursString = hours + "";
+        let minutesString = minutes + "";
+
+        if(hours < 10)
+            hoursString = "0" + hours;
+        if(minutes < 10)
+            minutesString = "0" + minutes
+
+        return hoursString + ":" + minutesString;
     }
 }

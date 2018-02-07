@@ -50,8 +50,8 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: "Voles du jour", component: HomePage, icon: "timer" },
-      { title: 'Chercher vole', component: ListPage, icon: "search" },
+      { title: "Voles du jour", component: ListPage, icon: "timer" },
+      { title: 'Chercher vole', component: ReserverPage, icon: "search" },
         { title: 'Nos avions', component: ListAvionsPage, icon: "plane" }
     ];
 

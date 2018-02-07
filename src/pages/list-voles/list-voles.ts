@@ -31,19 +31,14 @@ export class ListVolesPage {
 
     private limit = 3;
 
-    private isModal = false;
-
     private indexOfVols = 0;
 
-    private volModal;
-
+    private isModal = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private loadingCtrl: LoadingController,
               private dbProvider: DatabaseProvider, private viewCtrl: ViewController,
               private alertCtrl: AlertController) {
-
-      this.volModal = this.modalCtrl.create(AddVolModal);
 
   }
 
@@ -102,13 +97,14 @@ export class ListVolesPage {
 
 
   gotToAddVol() {
-      this.volModal.present();
+      let volModal = this.modalCtrl.create(AddVolModal);
+      volModal.present();
   }
 
 
   edit(vol) {
-      this.volModal = this.modalCtrl.create(AddVolModal, {vol: vol});
-      this.volModal.present();
+      let volModal = this.modalCtrl.create(AddVolModal, {vol: vol});
+      volModal.present();
   }
 
 

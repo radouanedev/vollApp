@@ -8,8 +8,8 @@ w
 
 
     readAsDataURL(fileURL){
-        return this.filePath.resolveNativePath(fileURL)
-            .then(filePath=> this.handlePreviewAndResolveFileUrl(filePath));
+        return this.filePath.resolveNativePath(fileURL);
+            //.then(filePath=> this.handlePreviewAndResolveFileUrl(filePath));
             //.then(file => this.handleFileUpload(file));
     }
 

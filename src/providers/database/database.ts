@@ -4,6 +4,7 @@ import {User} from "../../model/User";
 import {Avion} from "../../model/Avion";
 import {Vol} from "../../model/Vol";
 import {Ticket} from "../../model/Ticket";
+import {AuthServiceProvider} from "../auth-service/auth-service";
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -14,7 +15,7 @@ import {Ticket} from "../../model/Ticket";
 @Injectable()
 export class DatabaseProvider {
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private authProvider: AuthServiceProvider) {
     console.log('Hello DatabaseProvider Provider');
   }
 
@@ -74,21 +75,29 @@ export class DatabaseProvider {
   editVol(vol: Vol) {
       const volRef = this.db.object('vols/'+vol.id);
 
-      let _vol = vol;
+      let _vol = new Vol();
+
+      _vol.countryDepart = vol.countryDepart;
+      _vol.countryArrive = vol.countryArrive;
 
       //_vol.id = null;
 
-      let datetimeDepart = _vol.dateDepart + " " + _vol.heureDepart;
-      let datetimeArrive = _vol.dateArrive + " " + _vol.heureArrive;
+      let datetimeDepart = vol.dateDepart + " " + vol.heureDepart;
+      let datetimeArrive = vol.dateArrive + " " + vol.heureArrive;
 
-      _vol.heureDepart = null;
-      _vol.heureArrive = null;
+      /*_vol.heureDepart = null;
+      _vol.heureArrive = null;*/
 
       let datetimeDepartMilli = Date.parse(datetimeDepart);
       let datetimeArriveMilli = Date.parse(datetimeArrive);
 
       _vol.dateDepart = datetimeDepartMilli + "";
       _vol.dateArrive = datetimeArriveMilli + "";
+
+      _vol.prix = vol.prix;
+      _vol.nbrePlace = vol.nbrePlace;
+      _vol.avion = vol.avion;
+      _vol.cD_cA = vol.cD_cA;
 
       return volRef.update(_vol);
 
@@ -113,6 +122,19 @@ export class DatabaseProvider {
       return this.db.list("vols", ref=> ref.limitToFirst(limitFirst) )
           .snapshotChanges();
   }
+
+
+  /*getTodayVols() {
+
+      let currentDate = new Date();
+      let currentDateMillis = Date.parse(currentDate.toString());
+
+      console.log(currentDateMillis);
+
+      return this.db.list("vols", ref=> ref.limitToFirst(limitFirst))
+          .snapshotChanges();
+
+  }*/
 
 
   getVolsByCountry(countryD, countryA) {
@@ -148,6 +170,7 @@ export class DatabaseProvider {
       vol.dateArrive = volJ.payload.val()._dateArrive;
       vol.prix = volJ.payload.val()._prix;
       vol.nbrePlace = volJ.payload.val()._nbrePlace;
+      vol.cD_cA = volJ.payload.val()._cD_cA;
 
       let avionJ = volJ.payload.val()._avion;
       let avion = new Avion();
@@ -161,9 +184,36 @@ export class DatabaseProvider {
   }
 
 
-  addTicket(ticket: Ticket) {
+  addTicket(vol: Vol, user: any, userId) {
       const ticketsRef = this.db.list("tickets");
-      return ticketsRef.push(ticket);
+
+      let ticket = new Ticket();
+
+      let _vol = new Vol();
+
+      _vol.dateDepart = vol.dateDepart;
+      _vol.dateArrive = vol.dateArrive;
+      _vol.countryDepart = vol.countryDepart;
+      _vol.countryArrive = vol.countryArrive;
+      _vol.prix = vol.prix;
+      _vol.nbrePlace = vol.nbrePlace;
+      _vol.id = vol.id;
+
+      ticket.vol = _vol;
+
+      let _user = new User();
+      _user.cin = user._cin;
+      _user.nom = user._nom;
+      _user.prenom = user._prenom;
+      _user.id = userId;
+
+      ticket.user = _user;
+
+      return ticketsRef.push(ticket).then(value=> {
+          return this.updateVolAfterReserve(vol.id, _vol.nbrePlace);
+      });
+
+      //return ticketsRef.push(ticket);
   }
 
 
