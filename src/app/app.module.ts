@@ -43,6 +43,7 @@ import {MyToolBarComponent} from "../toolBarComponent/toolBarComponent";
 import {MyPopOver} from "../toolBarComponent/popOver";
 import { Globalization } from '@ionic-native/globalization';
 import { NativeStorage } from '@ionic-native/native-storage';
+import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
       MytimePipe,
       ListVolsModal,
       MyToolBarComponent,
-      MyPopOver
+      MyPopOver,
+      MesTicketsPage
 
   ],
   imports: [
@@ -93,7 +95,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
       AddVolModal,
       ReserverPage,
       ListVolsModal,
-      MyPopOver
+      MyPopOver,
+      MesTicketsPage
   ],
   providers: [
       StatusBar,

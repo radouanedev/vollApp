@@ -4,8 +4,10 @@ export const words = {
 
     english : {
 
-        reserve_string: "Reserve",
-        our_airplanes_string: "Our airplanes"
+        today_vols_string: "Today vols",
+        search_vol_string: "Search vols",
+        our_airplanes_string : "Our Airplanes",
+        wait_plz_string: "Wait please..."
 
     },
 

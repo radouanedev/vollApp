@@ -72,6 +72,7 @@ export class Register2Page implements OnInit{
                   loader.dismiss();
                   this.showSuccessAlert().then(
                       res => {
+                          this.authProvider.logout();
                           this.navCtrl.setRoot(LoginPage);
                       }
                   );

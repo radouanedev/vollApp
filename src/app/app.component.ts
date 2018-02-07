@@ -14,6 +14,7 @@ import { Globalization } from '@ionic-native/globalization';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {SpecificWords} from "../config/environment";
 import {words} from "../translate/words";
+import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 
 
 
@@ -35,13 +36,13 @@ export class MyApp {
               private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider,
               private loadingCtrl: LoadingController, private globalization: Globalization) {
 
-      /*this.globalization.getPreferredLanguage().then(res=>{
+      this.globalization.getPreferredLanguage().then(res=>{
           if(res.value == "fr-FR") {
               SpecificWords.myWords = words.french;
           } else if(res.value == "en-EN") {
               SpecificWords.myWords = words.english;
           }
-      })*/
+      })
 
 
 
@@ -86,6 +87,7 @@ export class MyApp {
                            MyApp.isAdmin = true;
                        } else if(roles.user) {
                            this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
+                           this.pages.push({ title: 'Mes Tickets', component: MesTicketsPage, icon: "card" });
                        }
                        MyApp.connected = true;
                    }
@@ -96,7 +98,11 @@ export class MyApp {
            });
        } else {
            if(MyApp.connected) {
-               this.pages.pop();
+               this.pages = [
+                   { title: "Voles du jour", component: ListPage, icon: "timer" },
+                   { title: 'Chercher vole', component: ReserverPage, icon: "search" },
+                   { title: 'Nos avions', component: ListAvionsPage, icon: "plane" }
+               ];
                MyApp.connected = false;
            }
 

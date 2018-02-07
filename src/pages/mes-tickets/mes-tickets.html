@@ -1,0 +1,57 @@
+<!--
+  Generated template for the ListVolesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Mes tickets</ion-title>
+        <ion-buttons end>
+            <mytoolbar></mytoolbar>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-card *ngFor="let ticket of tickets">
+        <ion-card-header>
+            {{ticket._user._nom}} {{ticket._user._prenom}}
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+
+                <ion-row>
+                    <ion-col>De &nbsp;&nbsp; {{ticket._vol._countryDepart}} &nbsp;&nbsp; à &nbsp; &nbsp; {{ticket._vol._countryArrive}}  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>De &nbsp;&nbsp; {{ticket._vol._dateDepart | mydate}} &nbsp;&nbsp; {{ticket._vol._dateDepart | mytime}} </ion-col>
+                    <ion-col></ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>  à &nbsp;&nbsp; {{ticket._vol._dateArrive | mydate}} &nbsp;&nbsp; {{ticket._vol._dateArrive |mytime}}</ion-col>
+                </ion-row>
+
+
+            </ion-grid>
+        </ion-card-content>
+
+
+        <ion-item class="card-footer" text-end>
+            {{ticket._vol._prix}} DH TTC
+        </ion-item>
+    </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+</ion-content>

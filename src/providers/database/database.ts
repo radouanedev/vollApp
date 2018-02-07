@@ -209,12 +209,18 @@ export class DatabaseProvider {
 
       ticket.user = _user;
 
-      return ticketsRef.push(ticket).then(value=> {
+      return ticketsRef.push(ticket).then(()=> {
           return this.updateVolAfterReserve(vol.id, _vol.nbrePlace);
       });
 
-      //return ticketsRef.push(ticket);
   }
+
+
+  getMyTickets(userId,limitFirst) {
+      return this.db.list("tickets", ref=> ref.orderByChild("_user/_id").equalTo(userId).limitToFirst(limitFirst))
+          .valueChanges();
+  }
+
 
 
 }
