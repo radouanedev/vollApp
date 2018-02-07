@@ -76,7 +76,7 @@ export class DatabaseProvider {
 
       let _vol = vol;
 
-      _vol.id = null;
+      //_vol.id = null;
 
       let datetimeDepart = _vol.dateDepart + " " + _vol.heureDepart;
       let datetimeArrive = _vol.dateArrive + " " + _vol.heureArrive;
@@ -95,14 +95,17 @@ export class DatabaseProvider {
   }
 
 
-  updateVolAfterReserve(id) {
+  deleteVol(id) {
       const volRef = this.db.object('vols/'+id);
-      this.db.object('vols'+id).valueChanges().subscribe(
-          (vol: any) => {
-              let newNbrePlace = --vol._nbrePlace;
-              volRef.update({_nbrePlace: newNbrePlace});
-          }
-      );
+      return volRef.remove();
+  }
+
+
+  updateVolAfterReserve(id, nbrePlace) {
+      const volRef = this.db.object('vols/'+id);
+      console.log("hahahaha : " + nbrePlace);
+      const newNbrePlaces = nbrePlace-1;
+      return volRef.update({_nbrePlace: newNbrePlaces});
   }
 
 

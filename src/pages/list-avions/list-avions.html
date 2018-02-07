@@ -29,14 +29,20 @@
 
 <ion-content padding >
 
-    <ion-card *ngFor="let avion of avions" (click)="pickAvion(avion)">
+    <ion-card *ngFor="let avion of avions; let i = index"  (click)="pickAvion(avion,i)">
 
         <img src="{{avion.imageURL}}">
+
+        <ion-fab end margin-top *ngIf="ind == i">
+            <button color="success" ion-fab mini>
+                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+            </button>
+        </ion-fab>
 
         <ion-item>
             <h2>{{avion._nom}}</h2>
             <p>{{avion._description}}</p>
-            <p>{{avion._nbrePlcMax}} max de places</p>
+            <p>{{avion._nbrePlcMax}} max de places </p>
         </ion-item>
 
     </ion-card>

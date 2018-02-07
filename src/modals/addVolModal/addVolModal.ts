@@ -43,16 +43,6 @@ export class AddVolModal implements OnInit {
 
         this.avionModal = this.modalCtrl.create(ListAvionsPage, {isModal: true});
 
-        this.avionModal.onDidDismiss(data => {
-            if(data) {
-                this.avion = data;
-                this.avion.description = null;
-                this.avion.imageURL = null;
-                this.errorAvion = null;
-            }
-            else
-                this.errorAvion = "Choisissez une avion svp";
-        });
     }
 
 
@@ -78,6 +68,20 @@ export class AddVolModal implements OnInit {
 
         }
 
+        this.avionModal.onDidDismiss(data => {
+
+            if(!this.avion) {
+                if(data) {
+                    this.avion = data;
+                    this.avion.description = null;
+                    this.avion.imageURL = null;
+                    this.errorAvion = null;
+                }
+                else
+                    this.errorAvion = "Choisissez une avion svp";
+            }
+        });
+
         this.myform = new AddVolForm();
         this.countriesProvider.getAllcountry().subscribe(
             (res: any) => {
@@ -93,6 +97,8 @@ export class AddVolModal implements OnInit {
 
 
     addAction() {
+
+        console.log("kkhulhiuhh");
         if (this.myform.invalid || !this.avion)
             return;
 

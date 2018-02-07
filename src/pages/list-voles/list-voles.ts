@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
-import {AddAvionModal} from "../../modals/addAvionModal/addAvionModal";
+import {
+    AlertController,
+    App, IonicPage, LoadingController, ModalController, NavController, NavParams,
+    ViewController
+} from 'ionic-angular';
 import {MyApp} from "../../app/app.component";
 import {AddVolModal} from "../../modals/addVolModal/addVolModal";
 import {Vol} from "../../model/Vol";
-import {Avion} from "../../model/Avion";
 import {DatabaseProvider} from "../../providers/database/database";
 
 /**
@@ -38,22 +40,21 @@ export class ListVolesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private loadingCtrl: LoadingController,
-              private dbProvider: DatabaseProvider, private viewCtrl: ViewController) {
+              private dbProvider: DatabaseProvider, private viewCtrl: ViewController,
+              private alertCtrl: AlertController) {
 
       this.volModal = this.modalCtrl.create(AddVolModal);
 
-      this.volModal.onDidDismiss(_=> {
-          this.navCtrl.setRoot(ListVolesPage);
-      });
   }
 
 
   ionViewDidLoad() {
       this.presentloader();
 
-      this.vols = [];
+
       this.dbProvider.getVols(this.limit).subscribe(
           vols => {
+              this.vols = [];
 
               this.limit++;
 
@@ -111,8 +112,32 @@ export class ListVolesPage {
   }
 
 
-  delete(id) {
+  delete(id,i) {
+      let alert = this.alertCtrl.create({
+          title: 'Confirm reservation',
+          message: 'vous étes sure de choisir ce vol?',
+          buttons: [
+              {
+                  text: 'Annuler',
+                  role: 'cancel',
+                  handler: () => {}
+              },
+              {
+                  text: 'Ok',
+                  handler: () => this.deleteVol(id,i)
+              }
+          ]
+      });
+      alert.present();
+  }
 
+
+  deleteVol(id,i) {
+      this.dbProvider.deleteVol(id).then(
+          res => {
+              this.vols.splice(i,0);
+          }
+      );
   }
 
 

@@ -19,7 +19,7 @@
 
 <ion-content padding>
 
-    <ion-card *ngFor="let vol of vols">
+    <ion-card *ngFor="let vol of vols; let i = index" >
 
         <ion-fab >
             <button color="primary" ion-fab mini>
@@ -27,7 +27,7 @@
             </button>
             <ion-fab-list side="bottom">
                 <button ion-fab color="secondary" (click)="edit(vol)"> <ion-icon ios="ios-create" md="md-create"></ion-icon></button>
-                <button ion-fab color="danger" (click)="delete(vol.id)">  <ion-icon ios="ios-remove" md="md-remove"></ion-icon></button>
+                <button ion-fab color="danger" (click)="delete(vol.id, i)">  <ion-icon ios="ios-remove" md="md-remove"></ion-icon></button>
             </ion-fab-list>
         </ion-fab>
         <ion-card-header text-center >

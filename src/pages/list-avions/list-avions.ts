@@ -33,6 +33,8 @@ export class ListAvionsPage {
 
     private indexOfAvions = 0;
 
+    private ind = -1;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private modalCtrl: ModalController, private dbProvider: DatabaseProvider,
               private loadingCtrl: LoadingController, private viewCtrl: ViewController) {
@@ -114,10 +116,16 @@ export class ListAvionsPage {
   }
 
 
-  pickAvion(avion: Avion) {
+  pickAvion(avion: Avion, i) {
       if(!this.isModal)
           return;
-      this.viewCtrl.dismiss(avion);
+
+      this.ind = i;
+
+      this.isModal = false;
+      setTimeout(()=> {
+          this.viewCtrl.dismiss(avion);
+      }, 800);
   }
 
 

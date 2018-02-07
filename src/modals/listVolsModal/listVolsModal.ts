@@ -23,6 +23,7 @@ export class ListVolsModal implements OnInit {
     private countryDepart = '';
     private countryArrive = '';
 
+    private ind = -1;
 
     constructor(private navCtrl: NavController, private navParams: NavParams,
                 public viewCtrl: ViewController, private modalCtrl: ModalController,
@@ -53,23 +54,31 @@ export class ListVolsModal implements OnInit {
             );
     }
 
-    pickVol(vol) {
-        let alert = this.alertCtrl.create({
-            title: 'Confirm reservation',
-            message: 'vous étes sure de choisir ce vol?',
-            buttons: [
-                {
-                    text: 'Annuler',
-                    role: 'cancel',
-                    handler: () => {}
-                },
-                {
-                    text: 'Ok',
-                    handler: () => this.addTicket(vol)
-                }
-            ]
-        });
-        alert.present();
+    pickVol(vol,i) {
+        if(this.ind > 0)
+            return;
+
+        this.ind = i;
+
+        setTimeout(() => {
+            let alert = this.alertCtrl.create({
+                title: 'Confirm reservation',
+                message: 'vous étes sure de choisir ce vol?',
+                buttons: [
+                    {
+                        text: 'Annuler',
+                        role: 'cancel',
+                        handler: () => {}
+                    },
+                    {
+                        text: 'Ok',
+                        handler: () => this.addTicket(vol)
+                    }
+                ]
+            });
+            alert.present();
+        }, 800);
+
     }
 
 
@@ -107,13 +116,14 @@ export class ListVolsModal implements OnInit {
 
                 this.dbProvider.addTicket(ticket).then(res => {
 
-                    //this.dbProvider.updateVolAfterReserve(vol.id);
+                    this.dbProvider.updateVolAfterReserve(vol.id, _vol.nbrePlace).then(res2 => {
 
-                    this.loader.dismiss();
+                        this.showSuccessAlert();
 
-                    this.showSuccessAlert();
+                        this.viewCtrl.dismiss();
 
-                    this.viewCtrl.dismiss();
+                    });
+
                 });
             });
         });

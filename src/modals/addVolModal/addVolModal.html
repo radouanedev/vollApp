@@ -16,7 +16,6 @@
 <ion-content padding>
 
     <form novalidate
-          (ngSubmit)="addAction()"
           [formGroup]="myform">
 
         <ion-grid>
@@ -182,8 +181,8 @@
                 <ion-col>
                     <button ion-button color="primary" type="submit"
                             [disabled]="myform.invalid || !avion" block>
-                        <span *ngIf="isUpdate">Modifier</span>
-                        <span *ngIf="!isUpdate">Ajouter</span>
+                        <span *ngIf="isUpdate" (click)="addAction()" >Modifier</span>
+                        <span *ngIf="!isUpdate" (click)="addAction()" >Ajouter</span>
                     </button>
                 </ion-col>
             </ion-row>
