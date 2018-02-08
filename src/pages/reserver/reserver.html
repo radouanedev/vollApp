@@ -25,7 +25,7 @@
 
     <form novalidate
           (ngSubmit)="chercher()"
-          [formGroup]="myform">
+          #myform="ngForm">
 
         <ion-grid>
 
@@ -38,7 +38,7 @@
 
                         <ion-select submitText="Ok" cancelText="Annuler"
                                     name="countryDepart" [(ngModel)]="searchEl.countryDepart"
-                                    formControlName="countryDepart" >
+                                    required #countryDepart="ngModel">
                             <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
                                 {{country.translations.fr}}
                             </ion-option>
@@ -46,7 +46,7 @@
 
                     </ion-item>
 
-                    <s-errors [control]="myform.controls.countryDepart" [messages]="myform.countryDepartMessages"></s-errors>
+                    <show-errors [control]="countryDepart"></show-errors>
 
                 </ion-col>
             </ion-row>
@@ -60,7 +60,7 @@
 
                     <ion-select submitText="Ok" cancelText="Annuler"
                                 name="countryArrive" [(ngModel)]="searchEl.countryArrive"
-                                formControlName="countryArrive" >
+                                required #countryArrive="ngModel">
                         <ion-option *ngFor="let country of countries" value="{{country.translations.fr}}">
                             {{country.translations.fr}}
                         </ion-option>
@@ -68,7 +68,11 @@
 
                 </ion-item>
 
-                <s-errors [control]="myform.controls.countryArrive" [messages]="myform.countryArriveMessages"></s-errors>
+                <show-errors [control]="countryArrive"></show-errors>
+                <span padding-left class="errorText" *ngIf="(countryArrive.dirty || countryArrive.touched)
+                                                             && searchEl.countryDepart == searchEl.countryArrive">
+                    Choissisez un autre pays
+                </span>
 
             </ion-col>
         </ion-row>
@@ -76,7 +80,8 @@
         <ion-row padding-top>
             <ion-col>
                 <button ion-button color="primary" type="submit"
-                        [disabled]="myform.invalid" block>Chercher</button>
+                        [disabled]="myform.invalid
+                                    || searchEl.countryDepart == searchEl.countryArrive" block>Chercher</button>
             </ion-col>
         </ion-row>
 

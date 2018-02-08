@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {FormGroup} from "@angular/forms";
 import {ReserverForm} from "../../forms/ReserverForm";
@@ -22,9 +22,9 @@ import {MyApp} from "../../app/app.component";
 })
 export class ReserverPage implements OnInit {
 
-    private isConnected = MyApp.connected;
+    @ViewChild("myform") private myform: any;
 
-    private myform: FormGroup;
+    private isConnected = MyApp.connected;
 
     private countries;
 
@@ -33,13 +33,12 @@ export class ReserverPage implements OnInit {
         countryArrive: ''
     };
 
-    private words;
+    private words = SpecificWords.myWords;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private countriesProvider: CountriesProvider, private dbProvider: DatabaseProvider,
               private modalCtrl: ModalController) {
 
-      this.words = SpecificWords.myWords;
   }
 
 
@@ -49,7 +48,6 @@ export class ReserverPage implements OnInit {
 
 
     ngOnInit() {
-      this.myform = new ReserverForm();
         this.countriesProvider.getAllcountry().subscribe(
             (res: any) => {
                 this.countries = res;

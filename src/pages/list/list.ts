@@ -7,6 +7,7 @@ import {LoginPage} from "../login/login";
 import {Ticket} from "../../model/Ticket";
 import {User} from "../../model/User";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {SpecificWords} from "../../config/environment";
 
 @Component({
   selector: 'page-list',
@@ -27,6 +28,10 @@ export class ListPage {
 
     private ind = -1;
 
+    private words = SpecificWords.myWords;
+
+    private selected = false;
+
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 private alertCtrl: AlertController, private loadingCtrl: LoadingController,
                 private dbProvider: DatabaseProvider,private authProvider: AuthServiceProvider,
@@ -39,7 +44,7 @@ export class ListPage {
         this.presentloader();
 
 
-        this.dbProvider.getVols(this.limit).subscribe(
+        this.dbProvider.getTodayVols(this.limit).subscribe(
             vols => {
                 this.vols = [];
 
@@ -64,7 +69,7 @@ export class ListPage {
 
         setTimeout(()=> {
 
-            this.dbProvider.getVols(this.limit).subscribe(
+            this.dbProvider.getTodayVols(this.limit).subscribe(
                 vols => {
                     this.limit++;
 
@@ -90,6 +95,13 @@ export class ListPage {
 
     pickVol(vol,i) {
 
+        if(this.selected)
+            return;
+
+        this.selected = true;
+
+        this.ind = i;
+
         if(this.isAdmin)
             return;
 
@@ -100,23 +112,21 @@ export class ListPage {
             return;
         }
 
-        if(this.ind > 0)
-            return;
-
-        this.ind = i;
+        /*if(this.ind > -1)
+            return;*/
 
         setTimeout(() => {
             let alert = this.alertCtrl.create({
-                title: 'Confirm reservation',
-                message: 'vous étes sure de reserver ce vol?',
+                title: this.words.confirm_reservation_title_string,
+                message: this.words.confirm_reservation_message_string,
                 buttons: [
                     {
-                        text: 'Annuler',
+                        text: this.words.cancel_string,
                         role: 'cancel',
-                        handler: () => {}
+                        handler: () => {this.selected = false;}
                     },
                     {
-                        text: 'Ok',
+                        text: this.words.okey_string,
                         handler: () => this.addTicket(vol)
                     }
                 ]
@@ -139,8 +149,6 @@ export class ListPage {
                 this.dbProvider.addTicket(vol, user2, userId).then(
                     res => {
                         this.showSuccessAlert();
-
-                        this.viewCtrl.dismiss();
                     }
                 );
             });
@@ -194,8 +202,8 @@ export class ListPage {
 
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Sccuée!',
-            subTitle: 'Ticket reservé avec success!',
+            title: this.words.success_string,
+            subTitle: this.words.success_reserve_ticket_string,
             buttons: ['OK']
         });
         alert.present();
@@ -204,7 +212,7 @@ export class ListPage {
 
     presentloader() {
         this.loader = this.loadingCtrl.create({
-            content: "Attendez svp..."
+            content: this.words.wait_plz_string
         });
 
         this.loader.present();

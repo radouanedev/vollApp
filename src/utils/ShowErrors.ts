@@ -17,11 +17,11 @@ export class ShowErrors {
     'minlength': (params) => 'Le min de characters est ' + params.requiredLength,
     'maxlength': (params) => 'Le max de characters est ' + params.requiredLength,
     'pattern': () => "Vous n'avez respecter le fromat",
-    'years': (params) => params.message,
+    /*'years': (params) => params.message,
     'countryCity': (params) => params.message,
     'uniqueName': (params) => params.message,
     'telephoneNumbers': (params) => params.message,
-    'telephoneNumber': (params) => params.message
+    'telephoneNumber': (params) => params.message*/
   };
 
   @Input()

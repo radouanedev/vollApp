@@ -11,7 +11,6 @@ import {ListVolesPage} from "../pages/list-voles/list-voles";
 import {ListAvionsPage} from "../pages/list-avions/list-avions";
 import {ReserverPage} from "../pages/reserver/reserver";
 import { Globalization } from '@ionic-native/globalization';
-import { NativeStorage } from '@ionic-native/native-storage';
 import {SpecificWords} from "../config/environment";
 import {words} from "../translate/words";
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
@@ -23,92 +22,71 @@ import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any = HomePage;
+
+  pages: Array<{title: string, component: any, icon: any}>;
+
   public static isAdmin = false;
   public static connected = false;
 
   private loader;
 
-  pages: Array<{title: string, component: any, icon: any}>;
+  private mywords;
+
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider,
               private loadingCtrl: LoadingController, private globalization: Globalization) {
 
-      this.globalization.getPreferredLanguage().then(res=>{
-          if(res.value == "fr-FR") {
-              SpecificWords.myWords = words.french;
-          } else if(res.value == "en-EN") {
-              SpecificWords.myWords = words.english;
-          }
-      })
-
-
-
-    this.initializeApp();
-
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: "Voles du jour", component: ListPage, icon: "timer" },
-      { title: 'Chercher vole', component: ReserverPage, icon: "search" },
-        { title: 'Nos avions', component: ListAvionsPage, icon: "plane" }
-    ];
-
-  }
-
-  initializeApp() {
-
       this.loader = this.loadingCtrl.create({
-          content: "Attendez svp..."
       });
 
       this.loader.present();
 
-      this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
 
+      this.platform.ready().then(() => {
+          this.statusBar.styleDefault();
+          this.splashScreen.hide();
+      });
+
+      SpecificWords.myWords = words.french;
+
+      this.globalization.getPreferredLanguage().then(res=>{
+          if(res.value == "fr-FR") {
+              SpecificWords.myWords = words.french;
+          } else if(res.value == "en-US") {
+              SpecificWords.myWords = words.english;
+          }
+
+          this.mywords = SpecificWords.myWords;
+
+          this.initializeApp();
+      })
+
+      this.mywords = SpecificWords.myWords;
+
+      this.initializeApp();
+
+  }
+
+
+  initializeApp() {
 
     this.authProvider.checkAuthState().onAuthStateChanged((user: any) => {
-       if(user) {
-           let userId = user.uid;
 
-           this.dbProvider.getUser(userId).subscribe((user2: any) => {
-               if(user) {
-                   if(!MyApp.connected) {
-                       const roles = user2._roles;
-                       if(roles.admin) {
-                           this.pages.push({ title: 'list voles', component: ListVolesPage, icon: "create" });
-                           MyApp.isAdmin = true;
-                       } else if(roles.user) {
-                           this.pages.push({ title: 'Reserver', component: ReserverPage, icon: "card" });
-                           this.pages.push({ title: 'Mes Tickets', component: MesTicketsPage, icon: "card" });
-                       }
-                       MyApp.connected = true;
-                   }
-               }
-               this.loader.dismiss();
+        this.initPages()
 
-           }, (err)=> {
-           });
-       } else {
-           if(MyApp.connected) {
-               this.pages = [
-                   { title: "Voles du jour", component: ListPage, icon: "timer" },
-                   { title: 'Chercher vole', component: ReserverPage, icon: "search" },
-                   { title: 'Nos avions', component: ListAvionsPage, icon: "plane" }
-               ];
-               MyApp.connected = false;
-           }
-
+        if(user) {
+            let userId = user.uid;
+            this.dbProvider.getUser(userId).subscribe((realUser: any) => this.getUser(realUser));
+        } else {
+            if(MyApp.connected) {
+                this.initPages();
+                MyApp.connected = false;
+                MyApp.isAdmin = false;
+            }
            this.loader.dismiss();
-
-       }
+        }
     });
 
   }
@@ -119,4 +97,33 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component, page.icon);
   }
+
+
+  getUser(user) {
+      if(user) {
+          if(!MyApp.connected) {
+              const roles = user._roles;
+              if(roles.admin) {
+                  this.pages.push({ title: this.mywords.list_flights_string, component: ListVolesPage, icon: "create" });
+                  MyApp.isAdmin = true;
+              } else if(roles.user) {
+                  this.pages.push({ title: this.mywords.reserve_string, component: ReserverPage, icon: "card" });
+                  this.pages.push({ title: this.mywords.my_tickets_string, component: MesTicketsPage, icon: "card" });
+              }
+              MyApp.connected = true;
+          }
+      }
+      this.loader.dismiss();
+  }
+
+
+  initPages() {
+      this.pages = [
+          { title: this.mywords.today_flights_string, component: ListPage, icon: "timer" },
+          { title: this.mywords.search_flight_string, component: ReserverPage, icon: "search" },
+          { title: this.mywords.our_airplanes_string, component: ListAvionsPage, icon: "plane" }
+      ];
+  }
+
+
 }

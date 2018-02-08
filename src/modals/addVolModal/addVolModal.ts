@@ -10,6 +10,7 @@ import {DatabaseProvider} from "../../providers/database/database";
 import {AddVolForm} from "../../forms/AddVolForm";
 import {AddAvionModal} from "../addAvionModal/addAvionModal";
 import {ListAvionsPage} from "../../pages/list-avions/list-avions";
+import {SpecificWords} from "../../config/environment";
 
 
 @Component({
@@ -37,6 +38,7 @@ export class AddVolModal implements OnInit {
 
     private recentVol = new Vol();
 
+    private words = SpecificWords.myWords;
 
     constructor(private countriesProvider: CountriesProvider, private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController, private dbProvider: DatabaseProvider,
@@ -113,12 +115,11 @@ export class AddVolModal implements OnInit {
 
     addAction() {
 
-        console.log("kkhulhiuhh");
         if (this.myform.invalid || !this.avion)
             return;
 
         this.loader = this.loadingCtrl.create({
-            content: "Attendez svp..."
+            content: this.words.wait_plz_string
         });
 
         this.loader.present();
@@ -129,7 +130,7 @@ export class AddVolModal implements OnInit {
                 _=> {
                     this.recentVol = this.vol;
                     this.loader.dismiss();
-                    this.showSuccessAlert('Vole modifier avec success!');
+                    this.showSuccessAlert(this.words.succee_edit_airplane_string);
                     this.dismiss();
                 }
             )
@@ -138,7 +139,7 @@ export class AddVolModal implements OnInit {
             this.dbProvider.addVol(this.vol).then(
                 _=> {
                     this.loader.dismiss();
-                    this.showSuccessAlert('Vole ajouter avec success!');
+                    this.showSuccessAlert(this.words.succee_add_airplane_string);
                     this.dismiss();
                 }
             );
@@ -155,9 +156,9 @@ export class AddVolModal implements OnInit {
 
     showSuccessAlert(message) {
         let alert = this.alertCtrl.create({
-            title: 'Sccuée!',
+            title: this.words.success_string,
             subTitle: message,
-            buttons: ['OK']
+            buttons: [this.words.okey_string]
         });
         alert.present();
     }

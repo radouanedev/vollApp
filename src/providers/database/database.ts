@@ -112,7 +112,6 @@ export class DatabaseProvider {
 
   updateVolAfterReserve(id, nbrePlace) {
       const volRef = this.db.object('vols/'+id);
-      console.log("hahahaha : " + nbrePlace);
       const newNbrePlaces = nbrePlace-1;
       return volRef.update({_nbrePlace: newNbrePlaces});
   }
@@ -124,17 +123,19 @@ export class DatabaseProvider {
   }
 
 
-  /*getTodayVols() {
+  getTodayVols(limitToFirst) {
 
       let currentDate = new Date();
-      let currentDateMillis = Date.parse(currentDate.toString());
+      let currentDateMillis = Date.parse(currentDate.toString()) - (1000*60);
 
       console.log(currentDateMillis);
 
-      return this.db.list("vols", ref=> ref.limitToFirst(limitFirst))
+      return this.db.list("vols", ref=> ref.orderByChild("_dateDepart")
+          .startAt(currentDateMillis, "_dateDepart")
+          .limitToFirst(limitToFirst))
           .snapshotChanges();
 
-  }*/
+  }
 
 
   getVolsByCountry(countryD, countryA) {
@@ -217,7 +218,8 @@ export class DatabaseProvider {
 
 
   getMyTickets(userId,limitFirst) {
-      return this.db.list("tickets", ref=> ref.orderByChild("_user/_id").equalTo(userId).limitToFirst(limitFirst))
+      return this.db.list("tickets", ref=> ref.orderByChild("_user/_id")
+          .equalTo(userId).limitToFirst(limitFirst))
           .valueChanges();
   }
 

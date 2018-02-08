@@ -1,11 +1,11 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Ajouter une avion
+            {{words.add_airplane_string}}
         </ion-title>
         <ion-buttons end>
             <button ion-button (click)="dismiss()" end>
-                <span ion-text color="primary" showWhen="ios">Annuler</span>
+                <span ion-text color="primary" showWhen="ios">{{words.cancel_string}}</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
         </ion-buttons>
@@ -27,7 +27,7 @@
                                    formControlName="nom"
                                    name="nom"
                                    type="text"
-                                   placeholder="Nom" > </ion-input>
+                                   placeholder="{{words.name_string}}" > </ion-input>
 
                     </ion-item>
 
@@ -43,7 +43,7 @@
                                    formControlName="description"
                                    type="text"
                                    name="description"
-                                   placeholder="Description"> </ion-textarea>
+                                   placeholder="{{words.description_string}}"> </ion-textarea>
 
                     </ion-item>
 
@@ -59,7 +59,7 @@
                                    formControlName="nbrePlcMax"
                                    type="number"
                                    name="nbrePlcMax"
-                                   placeholder="Nombre max de place"> </ion-input>
+                                   placeholder="{{words.nbre_max_place_string}}"> </ion-input>
 
                     </ion-item>
 
@@ -70,24 +70,24 @@
             <ion-row padding-top text-center>
                 <ion-col>
                     <button ion-button small icon-left color="light" (click)="choose()" >
-                        <ion-icon ios="ios-folder-open"  md="md-folder-open"></ion-icon>
-                        Choisir image d'avion
+                        <ion-icon ios="ios-folder-open" md="md-folder-open"></ion-icon>
+                        {{words.choose_img_airplane_string}}
                     </button>
 
                     <span class="text-md-danger" class="errorText" *ngIf="imageError">{{imageError}}</span>
                 </ion-col>
             </ion-row>
 
-            <ion-row text-center>
+            <ion-row text-center *ngIf="imageURL" >
                 <ion-col>
-                    <img *ngIf="imageURL"  [src]="imageURL" padding width="50%" height="230px">
+                    <img  [src]="imageURL" padding width="50%" height="230px">
                 </ion-col>
             </ion-row>
 
             <ion-row padding-top>
                 <ion-col>
                     <button ion-button color="primary" type="submit"
-                            [disabled]="myform.invalid" block>Ajouter</button>
+                            [disabled]="myform.invalid || !imageURL" block>{{words.add_string}}</button>
                 </ion-col>
             </ion-row>
 

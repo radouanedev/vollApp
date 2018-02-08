@@ -119,6 +119,10 @@ export class ListAvionsPage {
 
 
   pickAvion(avion: Avion, i) {
+
+      if(!this.isModal || !this.isAdmin)
+          return;
+
       if(this.ind > -1)
           return;
 

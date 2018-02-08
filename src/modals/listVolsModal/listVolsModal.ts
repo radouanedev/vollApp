@@ -5,12 +5,11 @@ import {
     ViewController
 } from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
-import {Ticket} from "../../model/Ticket";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
-import {User} from "../../model/User";
-import {NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR} from "@angular/core/src/view/provider";
-import {MyApp} from "../../app/app.component";
+
 import {LoginPage} from "../../pages/login/login";
+import {SpecificWords} from "../../config/environment";
+import {MyApp} from "../../app/app.component";
 
 @Component({
     templateUrl : 'listVolsModal.html',
@@ -33,6 +32,10 @@ export class ListVolsModal implements OnInit {
     private countryArrive = '';
 
     private ind = -1;
+
+    private selected = false;
+
+    private words = SpecificWords.myWords;
 
     constructor(private navCtrl: NavController, private navParams: NavParams,
                 public viewCtrl: ViewController, private modalCtrl: ModalController,
@@ -65,14 +68,14 @@ export class ListVolsModal implements OnInit {
             );
     }
 
+
     doInfinite(infiniteScroll) {
 
         setTimeout(()=> {
 
-            this.dbProvider.getVols(this.limit).subscribe(
+            this.dbProvider.getVolsByCountry(this.countryDepart, this.countryArrive).subscribe(
                 vols => {
                     this.limit++;
-
                     vols.forEach((vol, index) => {
                         if(index > this.indexOfVols) {
                             let _vol = this.dbProvider.buildVolFromJson(vol);
@@ -92,7 +95,15 @@ export class ListVolsModal implements OnInit {
 
     }
 
+
     pickVol(vol,i) {
+
+        if(this.selected)
+            return;
+
+        this.selected = true;
+
+        this.ind = i;
 
         if(this.isAdmin)
             return;
@@ -105,23 +116,19 @@ export class ListVolsModal implements OnInit {
             return;
         }
 
-        if(this.ind > -1)
-            return;
-
-        this.ind = i;
 
         setTimeout(() => {
             let alert = this.alertCtrl.create({
-                title: 'Confirm reservation',
-                message: 'vous étes sure de reserver ce vol?',
+                title: this.words.confirm_reservation_title_string,
+                message: this.words.confirm_reservation_message_string,
                 buttons: [
                     {
-                        text: 'Annuler',
+                        text: this.words.cancel_string,
                         role: 'cancel',
-                        handler: () => {}
+                        handler: () => {this.selected = false;}
                     },
                     {
-                        text: 'Ok',
+                        text: this.words.okey_string,
                         handler: () => this.addTicket(vol)
                     }
                 ]
@@ -153,48 +160,6 @@ export class ListVolsModal implements OnInit {
 
         });
 
-        /*let ticket = new Ticket();
-
-        let _vol = new Vol();
-
-        _vol.dateDepart = vol.dateDepart;
-        _vol.dateArrive = vol.dateArrive;
-        _vol.countryDepart = vol.countryDepart;
-        _vol.countryArrive = vol.countryArrive;
-        _vol.prix = vol.prix;
-        _vol.nbrePlace = vol.nbrePlace;
-        _vol.id = vol.id;
-
-        ticket.vol = _vol;
-
-        this.authProvider.checkConnection().subscribe(user => {
-
-            let userId = user.uid;
-
-            this.dbProvider.getUser(userId).subscribe((user2: any)=> {
-
-                let _user = new User();
-                _user.cin = user2._cin;
-                _user.nom = user2._nom;
-                _user.prenom = user2._prenom;
-                _user.id = userId;
-
-                ticket.user = _user;
-
-                this.dbProvider.addTicket(ticket).then(res => {
-
-                    this.dbProvider.updateVolAfterReserve(vol.id, _vol.nbrePlace).then(res2 => {
-
-                        this.showSuccessAlert();
-
-                        this.viewCtrl.dismiss();
-
-                    });
-
-                });
-            });
-        });*/
-
     }
 
 
@@ -205,7 +170,7 @@ export class ListVolsModal implements OnInit {
 
     presentloader() {
         this.loader = this.loadingCtrl.create({
-            content: "Attendez svp..."
+            content: this.words.wait_plz_string
         });
 
         this.loader.present();
@@ -214,9 +179,9 @@ export class ListVolsModal implements OnInit {
 
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Sccuée!',
-            subTitle: 'Ticket reservé avec success!',
-            buttons: ['OK']
+            title: this.words.success_string,
+            subTitle: this.words.success_reserve_ticket_string,
+            buttons: [this.words.okey_string]
         });
         alert.present();
     }

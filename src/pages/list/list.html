@@ -9,7 +9,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title> <span style="font-size: 17px">Clicker sur un vole pour le reserver</span></ion-title>
+        <ion-title> <span style="font-size: 17px">{{words.click_on_flight_for_reserve_message_string}}</span></ion-title>
         <ion-buttons end>
             <mytoolbar></mytoolbar>
         </ion-buttons>
@@ -27,35 +27,35 @@
             <ion-grid>
 
                 <ion-row>
-                    <ion-col>Date de depart  </ion-col><ion-col>{{vol.dateDepart | mydate}}</ion-col>
+                    <ion-col>{{words.departure_date_string}} </ion-col><ion-col>{{vol.dateDepart | mydate}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure de depart  </ion-col><ion-col>{{vol.dateDepart | mytime}}</ion-col>
+                    <ion-col>{{words.departure_hour_string}}  </ion-col><ion-col>{{vol.dateDepart | mytime}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Date d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mydate}}</ion-col>
+                    <ion-col>{{words.arrival_date_string}}  </ion-col><ion-col>{{vol.dateArrive | mydate}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Heure d'arrivée  </ion-col><ion-col>{{vol.dateArrive | mytime}}</ion-col>
+                    <ion-col>{{words.arrival_hour_string}}  </ion-col><ion-col>{{vol.dateArrive | mytime}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Prix </ion-col> <ion-col>{{vol.prix}} DH TTC</ion-col>
+                    <ion-col>{{words.price_string}} </ion-col> <ion-col>{{vol.prix}} DH TTC</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Max de places </ion-col> <ion-col>{{vol.avion.nbrePlcMax}}</ion-col>
+                    <ion-col>{{words.nbre_max_place_string}} </ion-col> <ion-col>{{vol.avion.nbrePlcMax}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Places restant </ion-col> <ion-col>{{vol.nbrePlace}}</ion-col>
+                    <ion-col>{{words.remaining_places_string}} </ion-col> <ion-col>{{vol.nbrePlace}}</ion-col>
                 </ion-row>
 
                 <ion-row>
-                    <ion-col>Avion : </ion-col> <ion-col>{{vol.avion.nom}}</ion-col>
+                    <ion-col>{{words.airplane_string}} : </ion-col> <ion-col>{{vol.avion.nom}}</ion-col>
                     <ion-fab end *ngIf="ind == i">
                         <button color="success" ion-fab mini>
                             <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>

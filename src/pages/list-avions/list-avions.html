@@ -33,7 +33,7 @@
 
         <img src="{{avion.imageURL}}">
 
-        <ion-fab end margin-top *ngIf="ind == i">
+        <ion-fab end margin-top *ngIf="ind == i && isAdmin">
             <button color="success" ion-fab mini>
                 <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
             </button>

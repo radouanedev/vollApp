@@ -10,6 +10,7 @@ import {FileChooser} from "@ionic-native/file-chooser";
 import { File} from "@ionic-native/file";
 import {DatabaseProvider} from "../../providers/database/database";
 import {FileUtils} from "../../utils/FileUtils";
+import {SpecificWords} from "../../config/environment";
 
 
 @Component({
@@ -25,6 +26,8 @@ export class AddAvionModal implements OnInit {
     private imageURL;
     private imageError;
     private loader;
+
+    private words = SpecificWords.myWords;
 
     constructor(
         public params: NavParams,private toastCtrl: ToastController,
@@ -61,22 +64,25 @@ export class AddAvionModal implements OnInit {
 
         this.fileChooser.open().then(
             uri => {
-                if(this.imageURL) {
-                    this.imageURL = uri;
+
+                if(uri == '') {
+                    this.imageError = "Image est requise";
+                    this.showToast("Canceled");
                     return;
                 }
 
-                if(uri =='') {
-                    this.imageError = "Image est requise";
-                    this.showToast("Canceled");
-                } else {
-                    this.imageURL = uri;
-                    this.imageError = null;
-                }
+                this.imageURL = uri;
+                this.imageError = null;
 
                 this.fileUtils.readAsDataURL(this.imageURL).then(fileUrl => {
+
+                    if(!this.validImage(fileUrl)) {
+                        this.imageURL = null;
+                        this.imageError = "Image est invalid";
+                        return;
+                    }
+
                     this.imageURL = fileUrl;
-                    alert(this.imageURL);
                 });
             }
         );
@@ -86,13 +92,13 @@ export class AddAvionModal implements OnInit {
 
     addAvion() {
 
-        /*if(!this.imageURL)
-            return;*/
+        if(!this.imageURL)
+            return;
 
-        let blob = new Blob()
+        //let blob = new Blob()
 
         this.loader = this.loadingCtrl.create({
-            content: "Attendez svp..."
+            content: this.words.wait_plz_string
         });
 
         this.loader.present();
@@ -140,11 +146,22 @@ export class AddAvionModal implements OnInit {
 
     showSuccessAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Sccuée!',
-            subTitle: 'Avion ajoutée avec success!',
-            buttons: ['OK']
+            title: this.words.success_string,
+            subTitle: this.words.succee_add_airplane_string,
+            buttons: [this.words.okey_string]
         });
         alert.present();
+    }
+
+
+    validImage(fileUrl): boolean {
+
+        let extension = fileUrl.substring(fileUrl.length-3,fileUrl.length);
+
+        if(extension == "jpg" || extension == "png")
+            return true
+
+        return false;
     }
 
 }
