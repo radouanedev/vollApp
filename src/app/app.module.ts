@@ -44,6 +44,8 @@ import {MyPopOver} from "../toolBarComponent/popOver";
 import { Globalization } from '@ionic-native/globalization';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
+import * as firebase from "firebase/app";
+import {Facebook} from "@ionic-native/facebook";
 
 
 @NgModule({
@@ -112,7 +114,8 @@ import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
       FilePath,
       File,
       Globalization,
-      NativeStorage
+      NativeStorage,
+      Facebook
 
   ]
 })
