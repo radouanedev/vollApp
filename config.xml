@@ -97,4 +97,7 @@
         <variable name="APP_NAME" value="vollA" />
     </plugin>
     <engine name="android" spec="~6.4.0" />
+    <plugin name="phonegap-plugin-push" spec="^2.1.3">
+        <variable name="FCM_VERSION" value="11.6.2" />
+    </plugin>
 </widget>

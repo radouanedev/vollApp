@@ -46,6 +46,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 import * as firebase from "firebase/app";
 import {Facebook} from "@ionic-native/facebook";
+import {Push} from "@ionic-native/push";
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import {Facebook} from "@ionic-native/facebook";
       AngularFireDatabaseModule,
       AngularFireStorageModule,
       AngularFirestoreModule,
+      HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -115,7 +117,8 @@ import {Facebook} from "@ionic-native/facebook";
       File,
       Globalization,
       NativeStorage,
-      Facebook
+      Facebook,
+      Push
 
   ]
 })
