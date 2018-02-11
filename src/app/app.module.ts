@@ -74,7 +74,6 @@ import {Push} from "@ionic-native/push";
   ],
   imports: [
     BrowserModule,
-      HttpClientModule,
       IonicModule.forRoot(MyApp),
       ReactiveFormsModule,
       AngularFireModule.initializeApp(firebaseConfig),

@@ -22,12 +22,15 @@ export class LoginPage {
 
   private reserverMessage;
 
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private authProvider: AuthServiceProvider, private loadingCtrl: LoadingController) {
 
       if(navParams.get("reserver")) {
           this.reserverMessage = "Connectez-vous pour reserver";
       }
+
   }
 
   ionViewDidLoad() {

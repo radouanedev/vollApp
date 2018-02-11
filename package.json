@@ -87,6 +87,7 @@
         "APP_NAME": "vollA"
       },
       "phonegap-plugin-push": {
+        "SENDER_ID": "889502691124",
         "FCM_VERSION": "11.6.2"
       }
     },

@@ -15,7 +15,8 @@ import {SpecificWords} from "../config/environment";
 import {words} from "../translate/words";
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 import {Push, PushObject, PushOptions} from "@ionic-native/push";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {LoginPage} from "../pages/login/login";
 
 
 
@@ -50,7 +51,7 @@ export class MyApp {
       this.platform.ready().then(() => {
           this.statusBar.styleDefault();
           this.splashScreen.hide();
-          this.initPushNotification();
+          //this.initPushNotification();
       });
 
       SpecificWords.myWords = words.french;
@@ -133,7 +134,13 @@ export class MyApp {
     saveDeviceToken(t)
     {
 
-        this.http.get('http://192.168.0.100/ionic/saveToken.php?token='+t)
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json')
+        headers.append('Accept', 'application/json');
+
+        //const params = new HttpParams().set('token',t);
+
+        this.http.post('http://localhost:3000/posts', {title:"first user",token:t})
             .subscribe(
                 data => {
                     alert(JSON.stringify(data));
@@ -158,13 +165,15 @@ export class MyApp {
                     console.log('We don\'t have permission to send push notifications');
                 }
 
+            }, err => {
+                alert("err 1");
             });
 
         // to initialize push notifications
 
         const options: PushOptions = {
             android: {
-                senderID: 'XXXXXXXXXXXXX'
+                senderID: '889502691124'
             },
             ios: {
                 alert: 'true',
@@ -199,9 +208,11 @@ export class MyApp {
         });
 
         pushObject.on('registration').subscribe((registration: any) => {
-            console.log('Device registered', registration);
-            alert(JSON.stringify(registration));
-            this.saveDeviceToken( registration.registrationId);
+            //console.log('Device registered', registration);
+            alert(registration.registrationId);
+            this.saveDeviceToken(registration.registrationId);
+        }, err => {
+            alert(err);
         });
 
         pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
