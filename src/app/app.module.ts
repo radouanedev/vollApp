@@ -29,6 +29,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {Facebook} from "@ionic-native/facebook";
 import {Push} from "@ionic-native/push";
 import {SharedModule} from "./shared.module";
+import {FCM} from "@ionic-native/fcm";
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import {SharedModule} from "./shared.module";
       Globalization,
       NativeStorage,
       Facebook,
-      Push
+      Push,
+      FCM
 
   ]
 })

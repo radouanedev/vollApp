@@ -11,6 +11,7 @@ import {words} from "../translate/words";
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 import {Push, PushObject, PushOptions} from "@ionic-native/push";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {FCM, NotificationData} from "@ionic-native/fcm";
 
 
 
@@ -35,7 +36,8 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               private authProvider: AuthServiceProvider, private dbProvider: DatabaseProvider,
               private loadingCtrl: LoadingController, private globalization: Globalization,
-              private alertCtrl: AlertController, private push: Push, private http: HttpClient) {
+              private alertCtrl: AlertController, private push: Push, private http: HttpClient,
+              private fcm: FCM) {
 
       this.loader = this.loadingCtrl.create({
       });
@@ -151,7 +153,7 @@ export class MyApp {
     initPushNotification()
     {
         // to check if we have permission
-        this.push.hasPermission()
+        /*this.push.hasPermission()
             .then((res: any) => {
 
                 if (res.isEnabled) {
@@ -162,11 +164,37 @@ export class MyApp {
 
             }, err => {
                 alert("err 1");
-            });
+            });*/
+
+
+        this.fcm.onNotification().subscribe((data: NotificationData)=>{
+            if(data.wasTapped){
+                this.nav.push('ReserverPage');
+                console.log("Received in background");
+            } else {
+
+                let confirmAlert = this.alertCtrl.create({
+                    title: 'New Notification',
+                    message: "hahahahah",
+                    buttons: [{
+                        text: 'Ignore',
+                        role: 'cancel'
+                    }, {
+                        text: 'View',
+                        handler: () => {
+                            this.nav.push('ReserverPage');
+                            //self.nav.push(DetailsPage, {message: data.message});
+                        }
+                    }]
+                });
+                confirmAlert.present();
+                console.log("Received in foreground");
+            };
+        })
 
         // to initialize push notifications
 
-        const options: PushOptions = {
+        /*const options: PushOptions = {
             android: {
                 senderID: '889502691124'
             },
@@ -180,8 +208,13 @@ export class MyApp {
 
         const pushObject: PushObject = this.push.init(options);
 
-        pushObject.on('notification').subscribe((notification: any) =>{
+        pushObject.on('notification').subscribe(    (notification: any) =>{
             console.log('Received a notification', notification);
+
+            if(notification.wasTapped) {
+                this.nav.push('ReserverPage');
+                return;
+            }
 
             //Notification Display Section
             let confirmAlert = this.alertCtrl.create({
@@ -194,6 +227,7 @@ export class MyApp {
                     text: 'View',
                     handler: () => {
                         //TODO: Your logic here
+                        this.nav.push('ReserverPage');
                         //self.nav.push(DetailsPage, {message: data.message});
                     }
                 }]
@@ -211,7 +245,7 @@ export class MyApp {
             alert(err);
         });
 
-        pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+        pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));*/
     }
 
 
