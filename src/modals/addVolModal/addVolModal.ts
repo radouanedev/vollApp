@@ -88,7 +88,7 @@ export class AddVolModal implements OnInit {
                 if(data) {
                     this.avion = data;
                     this.avion.description = null;
-                    this.avion.imageURL = null;
+                    //this.avion.imageURL = null;
                     this.errorAvion = null;
                     console.log(this.avion.nom);
                     this.vol.avion = this.avion;

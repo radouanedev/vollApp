@@ -21,7 +21,7 @@ import {FCM, NotificationData} from "@ionic-native/fcm";
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = 'HomePage';
+  rootPage: any = 'DetailVolPage';
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -48,7 +48,7 @@ export class MyApp {
       this.platform.ready().then(() => {
           this.statusBar.styleDefault();
           this.splashScreen.hide();
-          this.initPushNotification();
+          //this.initPushNotification();
       });
 
       SpecificWords.myWords = words.french;

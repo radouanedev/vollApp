@@ -48,6 +48,11 @@ export class DatabaseProvider {
   }
 
 
+  getVol(id){
+      return this.db.object("vols/"+id).snapshotChanges();
+  }
+
+
   addVol(vol: Vol) {
       const volsRef = this.db.list("vols");
 
@@ -71,6 +76,7 @@ export class DatabaseProvider {
 
       return volsRef.push(vol);
   }
+
 
   editVol(vol: Vol) {
       const volRef = this.db.object('vols/'+vol.id);
