@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { LoginPage } from './login';
 import { FormsModule } from "@angular/forms";
+import {SharedModule} from "../../app/shared.module";
 
 @NgModule({
   declarations: [
@@ -9,9 +10,11 @@ import { FormsModule } from "@angular/forms";
   ],
   imports: [
     FormsModule,
-    IonicPageModule.forChild(LoginPage)
+    IonicPageModule.forChild(LoginPage),
+      SharedModule
   ],
-  providers: [
-  ]
+    exports: [
+        LoginPage
+    ]
 })
 export class LoginPageModule {}

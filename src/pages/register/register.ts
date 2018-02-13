@@ -1,7 +1,6 @@
 import {Component, } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
-import {Register2Page} from "../register2/register2";
 import {User} from "../../model/User";
 import {FacebookLoginResponse} from "@ionic-native/facebook";
 
@@ -30,7 +29,7 @@ export class RegisterPage {
 
 
   mail() {
-      this.navCtrl.push(Register2Page);
+      this.navCtrl.push('Register2Page');
   }
 
 
@@ -41,7 +40,7 @@ export class RegisterPage {
       user.prenom = res.givenName;
       user.email = res.email;
       this.authProvider.logout();
-      this.navCtrl.push(Register2Page, {user: user});
+      this.navCtrl.push('Register2Page', {user: user});
     }, (err)=> {
       alert(err);
     });
@@ -56,7 +55,7 @@ export class RegisterPage {
               _user.prenom = user['first_name'];
               _user.email = user['email'];
               this.authProvider.logout();
-              this.navCtrl.push(Register2Page, {user: _user});
+              this.navCtrl.push('Register2Page', {user: _user});
           }, err => {
               alert("error data");
           });

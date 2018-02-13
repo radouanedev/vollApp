@@ -1,16 +1,16 @@
 import {Component, OnInit} from "@angular/core";
 import {Vol} from "../../model/Vol";
 import {
-    AlertController, App, LoadingController, ModalController, NavController, NavParams,
+    AlertController, App, IonicPage, LoadingController, ModalController, NavController, NavParams,
     ViewController
 } from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 
-import {LoginPage} from "../../pages/login/login";
 import {SpecificWords} from "../../config/environment";
 import {MyApp} from "../../app/app.component";
 
+@IonicPage()
 @Component({
     templateUrl : 'listVolsModal.html',
     styles: ['.card-header { color: #00BCD4}']
@@ -111,7 +111,7 @@ export class ListVolsModal implements OnInit {
         if(!this.isConnected) {
             setTimeout(()=> {
                 this.viewCtrl.dismiss();
-                this.appNav.getRootNav().setRoot(LoginPage, {reserver: true});
+                this.appNav.getRootNav().setRoot('LoginPage', {reserver: true});
             });
             return;
         }

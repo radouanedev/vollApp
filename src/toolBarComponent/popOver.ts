@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
-import {App, NavController, ViewController} from "ionic-angular";
-import {LoginPage} from "../pages/login/login";
+import {App, ViewController} from "ionic-angular";
 import {MyApp} from "../app/app.component";
 
 @Component({
@@ -23,13 +22,13 @@ export class MyPopOver implements OnInit{
     deconnecter() {
         this.authProvider.logout();
         this.viewCtrl.dismiss();
-        this.appCtrl.getRootNav().setRoot(LoginPage);
+        this.appCtrl.getRootNav().setRoot('LoginPage');
     }
 
 
     goToConnect() {
         this.viewCtrl.dismiss();
-        this.appCtrl.getRootNav().setRoot(LoginPage);
+        this.appCtrl.getRootNav().setRoot('LoginPage');
     }
 
 

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule} from 'ionic-angular';
 import { RegisterPage } from './register';
+import {ToolBarModule} from "../../toolBarComponent/toolBar.module";
+import {SharedModule} from "../../app/shared.module";
 
 @NgModule({
   declarations: [
@@ -8,7 +10,10 @@ import { RegisterPage } from './register';
   ],
   imports: [
       IonicPageModule.forChild(RegisterPage),
+      SharedModule
   ],
-    providers: []
+    exports: [
+        RegisterPage
+    ]
 })
 export class RegisterPageModule {}

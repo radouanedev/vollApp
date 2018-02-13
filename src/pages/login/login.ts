@@ -2,9 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
-import {HomePage} from "../home/home";
 import {User} from "../../model/User";
-import {RegisterPage} from "../register/register";
 
 
 
@@ -31,6 +29,10 @@ export class LoginPage {
           this.reserverMessage = "Connectez-vous pour reserver";
       }
 
+      /*if(navParams.get('id')) {
+          this.user.email = navParams.get('id');
+      }*/
+
   }
 
   ionViewDidLoad() {
@@ -50,7 +52,7 @@ export class LoginPage {
       this.authProvider.login(this.user).then(
         (res) => {
           console.log("login success");
-          this.navCtrl.setRoot(HomePage);
+          this.navCtrl.setRoot('HomePage');
           loader.dismiss();
         }, (err) => {
           console.log("login error");
@@ -63,7 +65,7 @@ export class LoginPage {
   }
 
   gotoRegisterPag() {
-    this.navCtrl.push(RegisterPage, {param1: 'info sended'});
+    this.navCtrl.push('RegisterPage', {param1: 'info sended'});
     //this.navCtrl.setRoot(RegisterPage);
   }
 

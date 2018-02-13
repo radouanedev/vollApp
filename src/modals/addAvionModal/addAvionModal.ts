@@ -1,5 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {AlertController, LoadingController, NavParams, Platform, ToastController, ViewController} from "ionic-angular";
+import {
+    AlertController, IonicPage, LoadingController, NavParams, Platform, ToastController,
+    ViewController
+} from "ionic-angular";
 import {FormGroup} from "@angular/forms";
 import {Avion} from "../../model/Avion";
 import {AddAvionForm} from "../../forms/AddAvionForm";
@@ -12,7 +15,7 @@ import {DatabaseProvider} from "../../providers/database/database";
 import {FileUtils} from "../../utils/FileUtils";
 import {SpecificWords} from "../../config/environment";
 
-
+@IonicPage()
 @Component({
     templateUrl: 'addAvionModal.html',
 })

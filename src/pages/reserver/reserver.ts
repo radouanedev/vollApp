@@ -1,10 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
-import {FormGroup} from "@angular/forms";
-import {ReserverForm} from "../../forms/ReserverForm";
 import {CountriesProvider} from "../../providers/countries/countries";
 import {DatabaseProvider} from "../../providers/database/database";
-import {ListVolsModal} from "../../modals/listVolsModal/listVolsModal";
 import {SpecificWords} from "../../config/environment";
 import {MyApp} from "../../app/app.component";
 
@@ -60,7 +57,7 @@ export class ReserverPage implements OnInit {
       if(this.myform.invalid)
           return;
 
-      let modal = this.modalCtrl.create(ListVolsModal, {
+      let modal = this.modalCtrl.create('ListVolsModal', {
           countryDepart: this.searchEl.countryDepart,
           countryArrive: this.searchEl.countryArrive
       });

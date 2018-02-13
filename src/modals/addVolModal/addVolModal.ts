@@ -3,16 +3,14 @@ import {CountriesProvider} from "../../providers/countries/countries";
 import {FormGroup} from "@angular/forms";
 import {Vol} from "../../model/Vol";
 import {
-    AlertController, LoadingController, ModalController, NavController, NavParams,
+    AlertController, IonicPage, LoadingController, ModalController, NavController, NavParams,
     ViewController
 } from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
 import {AddVolForm} from "../../forms/AddVolForm";
-import {AddAvionModal} from "../addAvionModal/addAvionModal";
-import {ListAvionsPage} from "../../pages/list-avions/list-avions";
 import {SpecificWords} from "../../config/environment";
 
-
+@IonicPage()
 @Component({
     templateUrl: 'addVolModal.html',
 })
@@ -45,7 +43,7 @@ export class AddVolModal implements OnInit {
                 public viewCtrl: ViewController, private modalCtrl: ModalController,
                 private navCtrl: NavController, private navParams: NavParams) {
 
-        this.avionModal = this.modalCtrl.create(ListAvionsPage, {isModal: true});
+        this.avionModal = this.modalCtrl.create('ListAvionsPage', {isModal: true});
 
     }
 

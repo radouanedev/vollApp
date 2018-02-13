@@ -3,20 +3,15 @@ import {AlertController, LoadingController, Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {DatabaseProvider} from "../providers/database/database";
-import {ListVolesPage} from "../pages/list-voles/list-voles";
-import {ListAvionsPage} from "../pages/list-avions/list-avions";
-import {ReserverPage} from "../pages/reserver/reserver";
 import { Globalization } from '@ionic-native/globalization';
 import {SpecificWords} from "../config/environment";
 import {words} from "../translate/words";
 import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 import {Push, PushObject, PushOptions} from "@ionic-native/push";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {LoginPage} from "../pages/login/login";
+
 
 
 
@@ -25,7 +20,7 @@ import {LoginPage} from "../pages/login/login";
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = HomePage;
+  rootPage: any = 'HomePage';
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -51,7 +46,7 @@ export class MyApp {
       this.platform.ready().then(() => {
           this.statusBar.styleDefault();
           this.splashScreen.hide();
-          //this.initPushNotification();
+          this.initPushNotification();
       });
 
       SpecificWords.myWords = words.french;
@@ -109,11 +104,11 @@ export class MyApp {
           if(!MyApp.connected) {
               const roles = user._roles;
               if(roles.admin) {
-                  this.pages.push({ title: this.mywords.list_flights_string, component: ListVolesPage, icon: "create" });
+                  this.pages.push({ title: this.mywords.list_flights_string, component: 'ListVolesPage', icon: "create" });
                   MyApp.isAdmin = true;
               } else if(roles.user) {
-                  this.pages.push({ title: this.mywords.reserve_string, component: ReserverPage, icon: "card" });
-                  this.pages.push({ title: this.mywords.my_tickets_string, component: MesTicketsPage, icon: "card" });
+                  this.pages.push({ title: this.mywords.reserve_string, component: 'ReserverPage', icon: "card" });
+                  this.pages.push({ title: this.mywords.my_tickets_string, component: 'MesTicketsPage', icon: "card" });
               }
               MyApp.connected = true;
           }
@@ -124,9 +119,9 @@ export class MyApp {
 
   initPages() {
       this.pages = [
-          { title: this.mywords.today_flights_string, component: ListPage, icon: "timer" },
-          { title: this.mywords.search_flight_string, component: ReserverPage, icon: "search" },
-          { title: this.mywords.our_airplanes_string, component: ListAvionsPage, icon: "plane" }
+          { title: this.mywords.today_flights_string, component: 'ListPage', icon: "timer" },
+          { title: this.mywords.search_flight_string, component: 'ReserverPage', icon: "search" },
+          { title: this.mywords.our_airplanes_string, component: 'ListAvionsPage', icon: "plane" }
       ];
   }
 
@@ -140,7 +135,7 @@ export class MyApp {
 
         //const params = new HttpParams().set('token',t);
 
-        this.http.post('http://localhost:3000/posts', {title:"first user",token:t})
+        this.http.post('https://jsonplaceholder.typicode.com/posts', {title:"first user",token:t})
             .subscribe(
                 data => {
                     alert(JSON.stringify(data));
@@ -191,7 +186,7 @@ export class MyApp {
             //Notification Display Section
             let confirmAlert = this.alertCtrl.create({
                 title: 'New Notification',
-                message: JSON.stringify(notification),
+                message: notification.message,
                 buttons: [{
                     text: 'Ignore',
                     role: 'cancel'
@@ -209,7 +204,8 @@ export class MyApp {
 
         pushObject.on('registration').subscribe((registration: any) => {
             //console.log('Device registered', registration);
-            alert(registration.registrationId);
+            //alert(registration.registrationId);
+            //this.nav.push('LoginPage', {id: registration.registrationId})
             this.saveDeviceToken(registration.registrationId);
         }, err => {
             alert(err);

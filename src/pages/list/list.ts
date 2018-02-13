@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {AlertController, App, LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {
+    AlertController, App, IonicPage, LoadingController, NavController, NavParams,
+    ViewController
+} from 'ionic-angular';
 import {MyApp} from "../../app/app.component";
 import {Vol} from "../../model/Vol";
 import {DatabaseProvider} from "../../providers/database/database";
-import {LoginPage} from "../login/login";
-import {Ticket} from "../../model/Ticket";
-import {User} from "../../model/User";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {SpecificWords} from "../../config/environment";
 
+@IonicPage()
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
@@ -107,7 +108,7 @@ export class ListPage {
 
         if(!this.isConnected) {
             setTimeout(()=> {
-                this.navCtrl.setRoot(LoginPage, {reserver: true});
+                this.navCtrl.setRoot('LoginPage', {reserver: true});
             }, 800);
             return;
         }

@@ -6,7 +6,6 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import { FormGroup} from "@angular/forms";
 import {RegisterForm} from "../../forms/RegisterForm";
 import {DatabaseProvider} from "../../providers/database/database";
-import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the Register2Page page.
@@ -73,7 +72,7 @@ export class Register2Page implements OnInit{
                   this.showSuccessAlert().then(
                       res => {
                           this.authProvider.logout();
-                          this.navCtrl.setRoot(LoginPage);
+                          this.navCtrl.setRoot('LoginPage');
                       }
                   );
               }, (err) => {

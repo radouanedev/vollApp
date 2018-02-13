@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, LoadingController, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
-import {AddAvionModal} from "../../modals/addAvionModal/addAvionModal";
 import {DatabaseProvider} from "../../providers/database/database";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {MyApp} from "../../app/app.component";
 import {Avion} from "../../model/Avion";
 
@@ -76,7 +74,7 @@ export class ListAvionsPage {
   }
 
   presentAddAvionModal() {
-      let profileModal = this.modalCtrl.create(AddAvionModal);
+      let profileModal = this.modalCtrl.create('AddAvionModal');
       profileModal.present();
   }
 

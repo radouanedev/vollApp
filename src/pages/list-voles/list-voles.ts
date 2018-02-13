@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import {
     AlertController,
-    App, IonicPage, LoadingController, ModalController, NavController, NavParams,
+    IonicPage, LoadingController, ModalController, NavController, NavParams,
     ViewController
 } from 'ionic-angular';
 import {MyApp} from "../../app/app.component";
-import {AddVolModal} from "../../modals/addVolModal/addVolModal";
 import {Vol} from "../../model/Vol";
 import {DatabaseProvider} from "../../providers/database/database";
 
@@ -97,13 +96,13 @@ export class ListVolesPage {
 
 
   gotToAddVol() {
-      let volModal = this.modalCtrl.create(AddVolModal);
+      let volModal = this.modalCtrl.create('AddVolModal');
       volModal.present();
   }
 
 
   edit(vol) {
-      let volModal = this.modalCtrl.create(AddVolModal, {vol: vol});
+      let volModal = this.modalCtrl.create('AddVolModal', {vol: vol});
       volModal.present();
   }
 
