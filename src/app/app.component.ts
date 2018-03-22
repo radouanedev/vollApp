@@ -12,6 +12,7 @@ import {MesTicketsPage} from "../pages/mes-tickets/mes-tickets";
 import {Push, PushObject, PushOptions} from "@ionic-native/push";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {FCM, NotificationData} from "@ionic-native/fcm";
+import {DetailVolPage} from "../pages/detail-vol/detail-vol";
 
 
 
@@ -21,7 +22,7 @@ import {FCM, NotificationData} from "@ionic-native/fcm";
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = 'DetailVolPage';
+  rootPage: any = 'HomePage';
 
   pages: Array<{title: string, component: any, icon: any}>;
 
@@ -48,7 +49,7 @@ export class MyApp {
       this.platform.ready().then(() => {
           this.statusBar.styleDefault();
           this.splashScreen.hide();
-          //this.initPushNotification();
+          this.initPushNotification();
       });
 
       SpecificWords.myWords = words.french;
@@ -128,7 +129,7 @@ export class MyApp {
   }
 
 
-    saveDeviceToken(t)
+    /*saveDeviceToken(t)
     {
 
         let headers = new HttpHeaders();
@@ -147,7 +148,7 @@ export class MyApp {
                 }
             );
 
-    }
+    }*/
 
 
     initPushNotification()
@@ -169,20 +170,20 @@ export class MyApp {
 
         this.fcm.onNotification().subscribe((data: NotificationData)=>{
             if(data.wasTapped){
-                this.nav.push('ReserverPage');
+                this.nav.push('DetailVolPage');
                 console.log("Received in background");
             } else {
 
                 let confirmAlert = this.alertCtrl.create({
                     title: 'New Notification',
-                    message: "hahahahah",
+                    message: data.content,
                     buttons: [{
                         text: 'Ignore',
                         role: 'cancel'
                     }, {
                         text: 'View',
                         handler: () => {
-                            this.nav.push('ReserverPage');
+                            this.nav.push('DetailVolPage');
                             //self.nav.push(DetailsPage, {message: data.message});
                         }
                     }]

@@ -49,7 +49,7 @@ export class DatabaseProvider {
 
 
   getVol(id){
-      return this.db.object("vols/"+id).snapshotChanges();
+      return this.db.object("vols/"+id).valueChanges();
   }
 
 
@@ -188,6 +188,32 @@ export class DatabaseProvider {
       vol.avion = avion;
 
       return vol;
+  }
+
+
+  buildVolFromJsonValues(volJ, id): Vol {
+
+      const _vol = new Vol();
+      _vol.id = id;
+      _vol.countryDepart = volJ._countryDepart;
+      _vol.countryArrive = volJ._countryArrive;
+      _vol.dateDepart = volJ._dateDepart;
+      _vol.dateArrive = volJ._dateArrive;
+      _vol.prix = volJ._prix;
+      _vol.nbrePlace = volJ._nbrePlace;
+      _vol.cD_cA = volJ._cD_cA;
+
+      let avionJ = volJ._avion;
+      let _avion = new Avion();
+      _avion.id = avionJ._id;
+      _avion.nbrePlcMax = avionJ._nbrePlcMax;
+      _avion.nom = avionJ._nom;
+      _avion.imageURL = avionJ.imageURL;
+
+      _vol.avion = _avion;
+
+      return _vol;
+
   }
 
 

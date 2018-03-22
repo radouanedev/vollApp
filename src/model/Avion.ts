@@ -41,7 +41,6 @@ export class Avion {
 
     get imageURL(): string {
         return this._imageURL;
-
     }
 
     set imageURL(value: string) {

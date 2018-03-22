@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {DatabaseProvider} from "../../providers/database/database";
 import {Vol} from "../../model/Vol";
+import {Avion} from "../../model/Avion";
 
 /**
  * Generated class for the DetailVolPage page.
@@ -26,6 +27,12 @@ export class DetailVolPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private dbProvider: DatabaseProvider, private loadingCtrl: LoadingController) {
 
+      this.presentloader();
+
+      this.vol.avion = new Avion();
+
+      this.id = "-L4kxR_MAHBLAFZOONA9";
+
       if(navParams.get("id")) {
           this.id = navParams.get("id");
       }
@@ -34,13 +41,14 @@ export class DetailVolPage {
 
 
   ionViewDidLoad() {
-      this.presentloader();
-      this.dbProvider.getVol(this.id).subscribe(
-          vol => {
-              this.vol = this.dbProvider.buildVolFromJson(vol);
-              this.loader.dismiss();
-          }
-      );
+
+      this.dbProvider.getVol(this.id).subscribe((volJ:any)=>{
+
+          this.vol = this.dbProvider.buildVolFromJsonValues(volJ, this.id);
+
+          this.loader.dismiss();
+      });
+
   }
 
 

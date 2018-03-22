@@ -53,6 +53,7 @@ export class ListPage {
 
                 vols.forEach((vol, index) => {
                     let _vol = this.dbProvider.buildVolFromJson(vol);
+                    console.log(_vol);
                     this.vols.push(_vol);
                     this.indexOfVols=index;
 
